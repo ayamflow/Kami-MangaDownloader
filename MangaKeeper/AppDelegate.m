@@ -8,7 +8,6 @@
 
 #import "AppDelegate.h"
 #import "MasterViewController.h"
-#import "BookmarksManager.h"
 
 @interface AppDelegate ()
 
@@ -24,10 +23,6 @@
 
     [self.window.contentView addSubview:self.masterViewController.view];
     self.masterViewController.view.frame = ((NSView *)self.window.contentView).bounds;
-}
-
-- (void)applicationWillTerminate:(NSNotification *)notification {
-    [[BookmarksManager sharedInstance] save];
 }
 
 @end

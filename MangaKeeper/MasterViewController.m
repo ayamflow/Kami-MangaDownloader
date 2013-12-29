@@ -37,10 +37,7 @@
 #pragma Bookmark Management
 
 - (void)restoreBookmarks {
-//    BookmarksManager *bookmarksManager = [BookmarksManager sharedInstance];
-//    for(BookmarkModel *bookmark in [bookmarksManager getBookmarks]) {
-//        [self.urlInput addItemWithObjectValue:bookmark.url];
-//    }
+
 }
 
 - (IBAction)addBookmark:(id)sender {
@@ -56,11 +53,12 @@
 #pragma NSComboBox delegate/datasource
 
 - (NSInteger)numberOfItemsInComboBox:(NSComboBox *)aComboBox {
+    NSLog(@"number of items: %li", [[[BookmarksManager sharedInstance] getBookmarks] count]);
     return [[[BookmarksManager sharedInstance] getBookmarks] count];
 }
 
 - (id)comboBox:(NSComboBox *)aComboBox objectValueForItemAtIndex:(NSInteger)index {
-    NSLog(@"object for index %i: %@", index, [[[BookmarksManager sharedInstance] getBookmarks] objectAtIndex:index]);
+    NSLog(@"object for index %li: %@", index, [[[BookmarksManager sharedInstance] getBookmarks] objectAtIndex:index]);
     return [[[BookmarksManager sharedInstance] getBookmarks] objectAtIndex:index];
 }
 

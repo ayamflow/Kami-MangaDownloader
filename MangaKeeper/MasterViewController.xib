@@ -62,8 +62,8 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </comboBoxCell>
                     <connections>
-                        <outlet property="dataSource" destination="-2" id="Ctr-Jh-YIw"/>
-                        <outlet property="delegate" destination="-2" id="qAL-uM-eP6"/>
+                        <outlet property="dataSource" destination="-2" id="Dd6-lC-E1g"/>
+                        <outlet property="delegate" destination="-2" id="VTb-cu-UpL"/>
                     </connections>
                 </comboBox>
             </subviews>

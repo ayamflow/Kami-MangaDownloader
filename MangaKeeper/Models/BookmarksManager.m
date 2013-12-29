@@ -45,7 +45,7 @@
     NSError *error;
     if(![[NSFileManager defaultManager] removeItemAtPath:savePlist error:&error])
     {
-        self.bookmarks = [[NSMutableArray alloc] init];
+        self.bookmarks = [NSMutableArray array];
 //        self.bookmarks = [NSMutableArray arrayWithObjects:@"One Piece", @"Naruto", @"Bleach", @"Gunnm", nil];
     }
     else {
@@ -56,12 +56,14 @@
 - (void)addBookmarkWithURL:(NSString *)url {
     BookmarkModel *bookmark = [[BookmarkModel alloc] initWithURL:url];
     [self.bookmarks addObject:bookmark];
+    [self save];
 }
 
 - (void)removeBookMarkWithURL:(NSString *)url {
     for(BookmarkModel *bookmark in self.bookmarks) {
         if([bookmark.url isEqualToString:url]) {
             [self.bookmarks removeObject:bookmark];
+            [self save];
             return;
         }
     }
