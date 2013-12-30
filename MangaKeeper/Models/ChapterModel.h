@@ -10,7 +10,8 @@
 
 @interface ChapterModel : NSObject
 
-@property (strong, nonatomic) NSString *chapterTitle;
-@property (strong, nonatomic) NSString *chapterURL;
+@property (strong, nonatomic) NSString *title;
+@property (strong, nonatomic) NSString *url;
+@property (strong, nonatomic) NSString *host;
 
 @end

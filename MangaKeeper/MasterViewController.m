@@ -33,8 +33,7 @@
 }
 
 - (IBAction)parseURL:(id)sender {
-    [self.progressIndicator setHidden:NO];
-    [self.progressIndicator startAnimation:nil];
+    [self showProgressIndicator];
     
     NSString *url = [self.urlInput stringValue];
     
@@ -61,9 +60,7 @@
     NSString *chaptersListQuery = @"//table[@id='listing']/tr/td/a";
     NSArray *chaptersNodes = [htmlParser searchWithXPathQuery:chaptersListQuery];
 
-    NSLog(@"stop");
-    [self.progressIndicator setHidden:YES];
-    [self.progressIndicator stopAnimation:nil];
+    [self hideProgressIndicator];
     
     if([chaptersNodes count] == 0) {
 
@@ -75,14 +72,59 @@
     NSMutableArray *chaptersModels = [NSMutableArray array];
     for(TFHppleElement *element in chaptersNodes) {
         ChapterModel *chapter = [[ChapterModel alloc] init];
-        chapter.chapterURL = [[element attributes] objectForKey:@"href"];
-        chapter.chapterTitle = [[element firstChild] content];
+        chapter.url = [[element attributes] objectForKey:@"href"];
+        chapter.title = [[element firstChild] content];
+        chapter.host = [NSString stringWithFormat:@"http://%@", [mangaUrl host]];
         [chaptersModels addObject:chapter];
-        [chaptersList addObject:chapter.chapterTitle];
+        [chaptersList addObject:chapter.title];
     }
 
     self.chaptersList = [NSArray arrayWithArray:chaptersList];
     self.chaptersModels = [NSArray arrayWithArray:chaptersModels];
+}
+
+#pragma  Download queue Management
+
+- (IBAction)addSelectionToDownloadQueue:(id)sender {
+    [self showProgressIndicator];
+    NSIndexSet *selectedChapters = [self.chapterListView selectedRowIndexes];
+    [selectedChapters enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
+//        [[DownloadManager sharedInstance] addFileToQueueWithURL:[self.chaptersModels objectAtIndex:idx]];
+        [self getPagesURLWithChapter:[self.chaptersModels objectAtIndex:idx]];
+    }];
+    [self hideProgressIndicator];
+}
+
+- (void)getPagesURLWithChapter:(ChapterModel *)chapter {
+    NSURL *chapterURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", chapter.host, chapter.url]];
+    NSData *htmlData = [NSData dataWithContentsOfURL:chapterURL];
+    TFHpple *htmlParser = [TFHpple hppleWithHTMLData:htmlData];
+    
+    // Get number of pages
+    NSString *pagesNumberQuery = @"//select[@id='pageMenu']";
+    NSArray *pagesNumberNodes = [htmlParser searchWithXPathQuery:pagesNumberQuery];
+    NSInteger pagesNumber = [[(TFHppleElement *)[pagesNumberNodes objectAtIndex:0] children] count];
+    
+    // Get URL of pages
+    NSString *pagesURLQuery = @"//select[@id='pageMenu']/option";
+    NSArray *pagesURLNodes = [htmlParser searchWithXPathQuery:pagesURLQuery];
+    NSMutableArray *pagesURLs = [NSMutableArray arrayWithCapacity:pagesNumber];
+    for(TFHppleElement *element in pagesURLNodes) {
+        [pagesURLs addObject:[[element attributes] objectForKey:@"value"]];
+    }
+    
+    // Get URL of images
+    NSMutableArray *imagesURL = [NSMutableArray arrayWithCapacity: pagesNumber];
+    for(NSString *url in pagesURLs) {
+        NSURL *pageURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", chapter.host, url]];
+        NSData *htmlData = [NSData dataWithContentsOfURL:pageURL];
+        TFHpple *htmlParser = [TFHpple hppleWithHTMLData:htmlData];
+        
+        NSString *imageQuery = @"//img[@id='img']";
+        NSArray *imageNodes = [htmlParser searchWithXPathQuery:imageQuery];
+        NSString *imageURL = [[(TFHppleElement *)[imageNodes objectAtIndex:0] attributes] objectForKey:@"src"];
+        [imagesURL addObject:imageURL];
+    }
 }
 
 #pragma Bookmark Management
@@ -99,15 +141,6 @@
 - (IBAction)removeBookmark:(id)sender {
     [[BookmarksManager sharedInstance] removeBookMarkWithURL:[self.urlInput stringValue]];
     [self.urlInput reloadData];
-}
-
-#pragma  Download queue Management
-
-- (IBAction)addSelectionToDownloadQueue:(id)sender {
-    NSIndexSet *selectedChapters = [self.chapterListView selectedRowIndexes];
-    [selectedChapters enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
-        [[DownloadManager sharedInstance] addFileToQueueWithURL:[self.chaptersModels objectAtIndex:idx]];
-    }];
 }
 
 #pragma NSComboBox delegate/datasource
@@ -128,6 +161,18 @@
 
 - (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
     return [self.chaptersList objectAtIndex:row];
+}
+
+#pragma Progress indicator
+
+- (void)showProgressIndicator {
+    [self.progressIndicator setHidden:NO];
+    [self.progressIndicator startAnimation:nil];
+}
+
+- (void)hideProgressIndicator {
+    [self.progressIndicator setHidden:YES];
+    [self.progressIndicator stopAnimation:nil];
 }
 
 @end
