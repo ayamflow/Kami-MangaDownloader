@@ -7,12 +7,19 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ChapterModel.h"
+#import "TFHpple.h"
 
 @protocol MangaSite <NSObject>
 
 @required
 
-- (NSArray *)getChaptersList;
-- (NSArray *)getImagesList;
+@property (strong, nonatomic) NSString *title;
+@property (strong, nonatomic) NSString *host;
+@property (strong, nonatomic) TFHpple *parser;
+
+- (NSNumber *)getPagesNumberForChapter:(ChapterModel *)chapter;
+- (NSArray *)getChaptersListWithURL:(NSURL *)url;
+- (NSArray *)getPagesForChapters:(NSIndexSet *)indexSet withModels:(NSArray *)chapterModels;
 
 @end

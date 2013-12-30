@@ -13,11 +13,14 @@
 #import "TFHpple.h"
 #import "ChapterModel.h"
 #import "DownloadManager.h"
+#import "MangaSite.h"
+#import "MangaReader.h"
 
 @interface MasterViewController ()
 
 @property (strong, nonatomic) NSArray *chaptersList;
 @property (strong, nonatomic) NSArray *chaptersModels;
+@property (strong, nonatomic) NSObject<MangaSite> *siteContent;
 
 @end
 
@@ -36,51 +39,29 @@
     [self showProgressIndicator];
     
     NSString *url = [self.urlInput stringValue];
-    
-    // Replace/parse url to get only info after "/" and host
-
     if(![url contains:@"http://"]) {
         url = [NSString stringWithFormat:@"http://%@", url];
     }
-    
-    if([url contains:@"mangareader.net"]) {
-        [self fetchHtmlWithURL:url];
-        [self.chapterListView reloadData];
+
+    NSURL *inputURL = [NSURL URLWithString:url];
+
+    NSString *host = [inputURL host];
+    if([host isEqualToString:@"mangareader.net"]) {
+        self.siteContent = [[MangaReader alloc] init];
     }
-}
 
-- (void)fetchHtmlWithURL:(NSString *)url {
-    [self.chaptersNumberLabel setStringValue:@"--"];
-    
-    NSURL *mangaUrl = [NSURL URLWithString:url];
-    NSData *htmlData = [NSData dataWithContentsOfURL:mangaUrl];
-    
-    TFHpple *htmlParser = [TFHpple hppleWithHTMLData:htmlData];
-    
-    NSString *chaptersListQuery = @"//table[@id='listing']/tr/td/a";
-    NSArray *chaptersNodes = [htmlParser searchWithXPathQuery:chaptersListQuery];
+    if(self.siteContent != nil) {
+        self.chaptersModels = [self.siteContent getChaptersListWithURL:inputURL];
+        self.chaptersList = [self.chaptersModels valueForKey:@"title"];
+    }
+    else {
+        self.chaptersModels = [NSArray array];
+        self.chaptersList = [NSArray array];
+    }
 
+    [self.chapterListView reloadData];
     [self hideProgressIndicator];
-    
-    if([chaptersNodes count] == 0) {
-
-    }
-    
-   [self.chaptersNumberLabel setStringValue:[NSString stringWithFormat:@"%li", [chaptersNodes count]]];
-    
-    NSMutableArray *chaptersList = [NSMutableArray array];
-    NSMutableArray *chaptersModels = [NSMutableArray array];
-    for(TFHppleElement *element in chaptersNodes) {
-        ChapterModel *chapter = [[ChapterModel alloc] init];
-        chapter.url = [[element attributes] objectForKey:@"href"];
-        chapter.title = [[element firstChild] content];
-        chapter.host = [NSString stringWithFormat:@"http://%@", [mangaUrl host]];
-        [chaptersModels addObject:chapter];
-        [chaptersList addObject:chapter.title];
-    }
-
-    self.chaptersList = [NSArray arrayWithArray:chaptersList];
-    self.chaptersModels = [NSArray arrayWithArray:chaptersModels];
+    [self.chaptersNumberLabel setStringValue:[NSString stringWithFormat:@"%li", [self.chaptersModels count]]];
 }
 
 #pragma  Download queue Management
@@ -88,10 +69,7 @@
 - (IBAction)addSelectionToDownloadQueue:(id)sender {
     [self showProgressIndicator];
     NSIndexSet *selectedChapters = [self.chapterListView selectedRowIndexes];
-    [selectedChapters enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
-//        [[DownloadManager sharedInstance] addFileToQueueWithURL:[self.chaptersModels objectAtIndex:idx]];
-        [self getPagesURLWithChapter:[self.chaptersModels objectAtIndex:idx]];
-    }];
+//    [self.siteContent getImagesListForChapters:selectedChapters withModels:self.chaptersModels];
     [self hideProgressIndicator];
 }
 

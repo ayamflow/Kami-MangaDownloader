@@ -11,7 +11,12 @@
 @interface ChapterModel : NSObject
 
 @property (strong, nonatomic) NSString *title;
-@property (strong, nonatomic) NSString *url;
+@property (strong, nonatomic) NSURL *url;
 @property (strong, nonatomic) NSString *host;
+@property (strong, nonatomic) NSArray *imagesURLs;
+@property (strong, nonatomic) NSNumber *pagesNumber;
+
+- (NSArray *)getImagesURLs;
+- (void)download;
 
 @end
