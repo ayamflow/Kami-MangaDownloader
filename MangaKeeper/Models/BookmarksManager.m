@@ -46,7 +46,6 @@
     if(![[NSFileManager defaultManager] removeItemAtPath:savePlist error:&error])
     {
         self.bookmarks = [NSMutableArray array];
-//        self.bookmarks = [NSMutableArray arrayWithObjects:@"One Piece", @"Naruto", @"Bleach", @"Gunnm", nil];
     }
     else {
         self.bookmarks = [NSMutableArray arrayWithContentsOfFile:savePlist];
@@ -55,18 +54,16 @@
 
 - (void)addBookmarkWithURL:(NSString *)url {
     BookmarkModel *bookmark = [[BookmarkModel alloc] initWithURL:url];
+    if([self getBookmarkWithURL:url] != nil) return; // Prevent doubles
     [self.bookmarks addObject:bookmark];
     [self save];
 }
 
 - (void)removeBookMarkWithURL:(NSString *)url {
-    for(BookmarkModel *bookmark in self.bookmarks) {
-        if([bookmark.url isEqualToString:url]) {
-            [self.bookmarks removeObject:bookmark];
-            [self save];
-            return;
-        }
-    }
+    BookmarkModel *bookmark = [self getBookmarkWithURL:url];
+    if(bookmark == nil) return;
+    [self.bookmarks removeObject:bookmark];
+    [self save];
 }
 
 - (NSString *)getSavePlistPath {
@@ -82,6 +79,15 @@
     {
         NSLog(@"[Bookmarks] No plist to delete");
     }
+}
+
+- (BookmarkModel *)getBookmarkWithURL:(NSString *)url {
+    for(BookmarkModel *bookmark in self.bookmarks) {
+        if([bookmark.url isEqualToString:url]) {
+            return bookmark;
+        }
+    }
+    return nil;
 }
 
 - (NSArray *)getBookmarks {

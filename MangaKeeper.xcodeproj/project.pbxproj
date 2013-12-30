@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4F81C56018718E4A00715DA8 /* NSString+Common.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F81C55F18718E4A00715DA8 /* NSString+Common.m */; };
+		4F81C56818718E5400715DA8 /* TFHpple.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F81C56318718E5400715DA8 /* TFHpple.m */; };
+		4F81C56918718E5400715DA8 /* TFHppleElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F81C56518718E5400715DA8 /* TFHppleElement.m */; };
+		4F81C56A18718E5400715DA8 /* XPathQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F81C56718718E5400715DA8 /* XPathQuery.m */; };
+		4F81C56C18718ECD00715DA8 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F81C56B18718ECD00715DA8 /* libxml2.dylib */; };
+		4F81C56F1871905500715DA8 /* ChapterModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F81C56E1871905500715DA8 /* ChapterModel.m */; };
 		CE0A367A186DF45F001A3088 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE0A3679186DF45F001A3088 /* Cocoa.framework */; };
 		CE0A3684186DF45F001A3088 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = CE0A3682186DF45F001A3088 /* InfoPlist.strings */; };
 		CE0A3686186DF45F001A3088 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CE0A3685186DF45F001A3088 /* main.m */; };
@@ -22,7 +28,6 @@
 		CE0A36B1186DF735001A3088 /* MasterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE0A36AF186DF735001A3088 /* MasterViewController.xib */; };
 		CE0A36BA186DF902001A3088 /* ChapterParser.m in Sources */ = {isa = PBXBuildFile; fileRef = CE0A36B8186DF902001A3088 /* ChapterParser.m */; };
 		CE0A36BB186DF902001A3088 /* ChapterParser.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE0A36B9186DF902001A3088 /* ChapterParser.xib */; };
-		CE0A36C0186E037F001A3088 /* NSString+Common.m in Sources */ = {isa = PBXBuildFile; fileRef = CE0A36BF186E037F001A3088 /* NSString+Common.m */; };
 		CEEAF5DF18702F72000E1500 /* BookmarkModel.m in Sources */ = {isa = PBXBuildFile; fileRef = CEEAF5DE18702F72000E1500 /* BookmarkModel.m */; };
 		CEEAF5E218702FA0000E1500 /* BookmarksManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CEEAF5E118702FA0000E1500 /* BookmarksManager.m */; };
 /* End PBXBuildFile section */
@@ -38,6 +43,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4F81C55E18718E4A00715DA8 /* NSString+Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+Common.h"; path = "Libs/NSString+Common/NSString+Common.h"; sourceTree = "<group>"; };
+		4F81C55F18718E4A00715DA8 /* NSString+Common.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+Common.m"; path = "Libs/NSString+Common/NSString+Common.m"; sourceTree = "<group>"; };
+		4F81C56218718E5400715DA8 /* TFHpple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TFHpple.h; path = Libs/hpple/TFHpple.h; sourceTree = "<group>"; };
+		4F81C56318718E5400715DA8 /* TFHpple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TFHpple.m; path = Libs/hpple/TFHpple.m; sourceTree = "<group>"; };
+		4F81C56418718E5400715DA8 /* TFHppleElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TFHppleElement.h; path = Libs/hpple/TFHppleElement.h; sourceTree = "<group>"; };
+		4F81C56518718E5400715DA8 /* TFHppleElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TFHppleElement.m; path = Libs/hpple/TFHppleElement.m; sourceTree = "<group>"; };
+		4F81C56618718E5400715DA8 /* XPathQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XPathQuery.h; path = Libs/hpple/XPathQuery.h; sourceTree = "<group>"; };
+		4F81C56718718E5400715DA8 /* XPathQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XPathQuery.m; path = Libs/hpple/XPathQuery.m; sourceTree = "<group>"; };
+		4F81C56B18718ECD00715DA8 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
+		4F81C56D1871905500715DA8 /* ChapterModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChapterModel.h; path = Models/ChapterModel.h; sourceTree = "<group>"; };
+		4F81C56E1871905500715DA8 /* ChapterModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChapterModel.m; path = Models/ChapterModel.m; sourceTree = "<group>"; };
 		CE0A3676186DF45F001A3088 /* MangaKeeper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MangaKeeper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE0A3679186DF45F001A3088 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		CE0A367C186DF45F001A3088 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -63,8 +79,6 @@
 		CE0A36B7186DF902001A3088 /* ChapterParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChapterParser.h; path = Modules/ChapterParser/ChapterParser.h; sourceTree = "<group>"; };
 		CE0A36B8186DF902001A3088 /* ChapterParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChapterParser.m; path = Modules/ChapterParser/ChapterParser.m; sourceTree = "<group>"; };
 		CE0A36B9186DF902001A3088 /* ChapterParser.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ChapterParser.xib; path = Modules/ChapterParser/ChapterParser.xib; sourceTree = "<group>"; };
-		CE0A36BE186E037F001A3088 /* NSString+Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+Common.h"; path = "Libs/NSString+Common.h"; sourceTree = "<group>"; };
-		CE0A36BF186E037F001A3088 /* NSString+Common.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+Common.m"; path = "Libs/NSString+Common.m"; sourceTree = "<group>"; };
 		CEEAF5DD18702F72000E1500 /* BookmarkModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BookmarkModel.h; path = Models/BookmarkModel.h; sourceTree = "<group>"; };
 		CEEAF5DE18702F72000E1500 /* BookmarkModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BookmarkModel.m; path = Models/BookmarkModel.m; sourceTree = "<group>"; };
 		CEEAF5E018702FA0000E1500 /* BookmarksManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BookmarksManager.h; path = Models/BookmarksManager.h; sourceTree = "<group>"; };
@@ -76,6 +90,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F81C56C18718ECD00715DA8 /* libxml2.dylib in Frameworks */,
 				CE0A367A186DF45F001A3088 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -92,6 +107,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4F81C56118718E4C00715DA8 /* hpple */ = {
+			isa = PBXGroup;
+			children = (
+				4F81C56218718E5400715DA8 /* TFHpple.h */,
+				4F81C56318718E5400715DA8 /* TFHpple.m */,
+				4F81C56418718E5400715DA8 /* TFHppleElement.h */,
+				4F81C56518718E5400715DA8 /* TFHppleElement.m */,
+				4F81C56618718E5400715DA8 /* XPathQuery.h */,
+				4F81C56718718E5400715DA8 /* XPathQuery.m */,
+			);
+			name = hpple;
+			sourceTree = "<group>";
+		};
 		CE0A366D186DF45F001A3088 = {
 			isa = PBXGroup;
 			children = (
@@ -114,6 +142,7 @@
 		CE0A3678186DF45F001A3088 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4F81C56B18718ECD00715DA8 /* libxml2.dylib */,
 				CE0A3679186DF45F001A3088 /* Cocoa.framework */,
 				CE0A3698186DF45F001A3088 /* XCTest.framework */,
 				CE0A367B186DF45F001A3088 /* Other Frameworks */,
@@ -224,6 +253,7 @@
 		CE0A36BC186E0367001A3088 /* Libs */ = {
 			isa = PBXGroup;
 			children = (
+				4F81C56118718E4C00715DA8 /* hpple */,
 				CE0A36BD186E036E001A3088 /* NSString+Common */,
 			);
 			name = Libs;
@@ -232,8 +262,8 @@
 		CE0A36BD186E036E001A3088 /* NSString+Common */ = {
 			isa = PBXGroup;
 			children = (
-				CE0A36BE186E037F001A3088 /* NSString+Common.h */,
-				CE0A36BF186E037F001A3088 /* NSString+Common.m */,
+				4F81C55E18718E4A00715DA8 /* NSString+Common.h */,
+				4F81C55F18718E4A00715DA8 /* NSString+Common.m */,
 			);
 			name = "NSString+Common";
 			sourceTree = "<group>";
@@ -245,6 +275,8 @@
 				CEEAF5DE18702F72000E1500 /* BookmarkModel.m */,
 				CEEAF5E018702FA0000E1500 /* BookmarksManager.h */,
 				CEEAF5E118702FA0000E1500 /* BookmarksManager.m */,
+				4F81C56D1871905500715DA8 /* ChapterModel.h */,
+				4F81C56E1871905500715DA8 /* ChapterModel.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -351,11 +383,15 @@
 			files = (
 				CE0A368D186DF45F001A3088 /* AppDelegate.m in Sources */,
 				CEEAF5E218702FA0000E1500 /* BookmarksManager.m in Sources */,
+				4F81C56A18718E5400715DA8 /* XPathQuery.m in Sources */,
+				4F81C56018718E4A00715DA8 /* NSString+Common.m in Sources */,
+				4F81C56F1871905500715DA8 /* ChapterModel.m in Sources */,
 				CEEAF5DF18702F72000E1500 /* BookmarkModel.m in Sources */,
 				CE0A36B0186DF735001A3088 /* MasterViewController.m in Sources */,
 				CE0A36BA186DF902001A3088 /* ChapterParser.m in Sources */,
+				4F81C56918718E5400715DA8 /* TFHppleElement.m in Sources */,
 				CE0A3686186DF45F001A3088 /* main.m in Sources */,
-				CE0A36C0186E037F001A3088 /* NSString+Common.m in Sources */,
+				4F81C56818718E5400715DA8 /* TFHpple.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -488,6 +524,11 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MangaKeeper/MangaKeeper-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SDKROOT)/usr/include/libxml2",
+				);
 				INFOPLIST_FILE = "MangaKeeper/MangaKeeper-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -501,6 +542,11 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MangaKeeper/MangaKeeper-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SDKROOT)/usr/include/libxml2",
+				);
 				INFOPLIST_FILE = "MangaKeeper/MangaKeeper-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
