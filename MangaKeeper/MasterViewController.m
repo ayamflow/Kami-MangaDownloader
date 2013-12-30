@@ -12,10 +12,12 @@
 #import "BookmarkModel.h"
 #import "TFHpple.h"
 #import "ChapterModel.h"
+#import "DownloadManager.h"
 
 @interface MasterViewController ()
 
 @property (strong, nonatomic) NSArray *chaptersList;
+@property (strong, nonatomic) NSArray *chaptersModels;
 
 @end
 
@@ -31,39 +33,56 @@
 }
 
 - (IBAction)parseURL:(id)sender {
+    [self.progressIndicator setHidden:NO];
+    [self.progressIndicator startAnimation:nil];
+    
     NSString *url = [self.urlInput stringValue];
     
     // Replace/parse url to get only info after "/" and host
 
+    if(![url contains:@"http://"]) {
+        url = [NSString stringWithFormat:@"http://%@", url];
+    }
+    
     if([url contains:@"mangareader.net"]) {
-        self.chaptersList = [self fetchHtmlWithURL:url];
+        [self fetchHtmlWithURL:url];
         [self.chapterListView reloadData];
     }
 }
 
-- (NSArray *)fetchHtmlWithURL:(NSString *)url {
+- (void)fetchHtmlWithURL:(NSString *)url {
+    [self.chaptersNumberLabel setStringValue:@"--"];
+    
     NSURL *mangaUrl = [NSURL URLWithString:url];
     NSData *htmlData = [NSData dataWithContentsOfURL:mangaUrl];
     
     TFHpple *htmlParser = [TFHpple hppleWithHTMLData:htmlData];
-
-/*    NSString *mangaNameQuery = @"//h2[@class='aname']";
-    NSArray *mangaName = [htmlParser searchWithXPathQuery:mangaNameQuery];
-    NSString *mangaTitle = [[(TFHppleElement *)[mangaName objectAtIndex:0] firstChild] content];*/
     
     NSString *chaptersListQuery = @"//table[@id='listing']/tr/td/a";
     NSArray *chaptersNodes = [htmlParser searchWithXPathQuery:chaptersListQuery];
+
+    NSLog(@"stop");
+    [self.progressIndicator setHidden:YES];
+    [self.progressIndicator stopAnimation:nil];
+    
+    if([chaptersNodes count] == 0) {
+
+    }
+    
+   [self.chaptersNumberLabel setStringValue:[NSString stringWithFormat:@"%li", [chaptersNodes count]]];
     
     NSMutableArray *chaptersList = [NSMutableArray array];
+    NSMutableArray *chaptersModels = [NSMutableArray array];
     for(TFHppleElement *element in chaptersNodes) {
         ChapterModel *chapter = [[ChapterModel alloc] init];
         chapter.chapterURL = [[element attributes] objectForKey:@"href"];
         chapter.chapterTitle = [[element firstChild] content];
-//        [chaptersList addObject:chapter];
+        [chaptersModels addObject:chapter];
         [chaptersList addObject:chapter.chapterTitle];
     }
 
-    return [NSArray arrayWithArray:chaptersList];
+    self.chaptersList = [NSArray arrayWithArray:chaptersList];
+    self.chaptersModels = [NSArray arrayWithArray:chaptersModels];
 }
 
 #pragma Bookmark Management
@@ -86,7 +105,9 @@
 
 - (IBAction)addSelectionToDownloadQueue:(id)sender {
     NSIndexSet *selectedChapters = [self.chapterListView selectedRowIndexes];
-    NSLog(@"%@", selectedChapters);
+    [selectedChapters enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
+        [[DownloadManager sharedInstance] addFileToQueueWithURL:[self.chaptersModels objectAtIndex:idx]];
+    }];
 }
 
 #pragma NSComboBox delegate/datasource

@@ -9,8 +9,10 @@
             <connections>
                 <outlet property="addBookmarkButton" destination="2xW-F9-RMn" id="BgB-3g-OAy"/>
                 <outlet property="chapterListView" destination="dq3-Jf-CU6" id="x2q-k7-Q1i"/>
+                <outlet property="chaptersNumberLabel" destination="xX7-gt-6fx" id="GS1-un-1Z8"/>
                 <outlet property="downloadButton" destination="cMB-N5-P0S" id="3m6-Lj-fET"/>
                 <outlet property="goButton" destination="8zC-dy-Hbe" id="mA7-fJ-1GQ"/>
+                <outlet property="progressIndicator" destination="z8X-kB-7Vz" id="4yx-ED-VXM"/>
                 <outlet property="removeBookmarkButton" destination="tIg-TT-H8L" id="eIY-vV-IuG"/>
                 <outlet property="urlInput" destination="y9I-bf-Yya" id="06C-Be-e0K"/>
                 <outlet property="view" destination="1" id="yWj-8a-0vS"/>
@@ -45,7 +47,7 @@
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tIg-TT-H8L">
-                    <rect key="frame" x="474" y="328" width="90" height="32"/>
+                    <rect key="frame" x="478" y="327" width="90" height="32"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="push" title="Remove" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="yjE-hI-JHz">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -58,12 +60,13 @@
                 <comboBox verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="y9I-bf-Yya">
                     <rect key="frame" x="20" y="331" width="389" height="26"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" usesDataSource="YES" numberOfVisibleItems="5" id="dPA-Pi-a9l">
+                    <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" borderStyle="bezel" drawsBackground="YES" usesDataSource="YES" numberOfVisibleItems="5" id="dPA-Pi-a9l">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </comboBoxCell>
                     <connections>
+                        <action selector="parseURL:" target="-2" id="wlt-uH-QVk"/>
                         <outlet property="dataSource" destination="-2" id="Dd6-lC-E1g"/>
                         <outlet property="delegate" destination="-2" id="VTb-cu-UpL"/>
                     </connections>
@@ -176,9 +179,9 @@
                     </tableHeaderView>
                 </scrollView>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cMB-N5-P0S">
-                    <rect key="frame" x="14" y="102" width="251" height="32"/>
+                    <rect key="frame" x="248" y="114" width="164" height="32"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="push" title="Add selection to download queue" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="0dN-EP-qzC">
+                    <buttonCell key="cell" type="push" title="Download selection" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="0dN-EP-qzC">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
@@ -186,7 +189,30 @@
                         <action selector="addSelectionToDownloadQueue:" target="-2" id="fhi-eW-tJe"/>
                     </connections>
                 </button>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xX7-gt-6fx">
+                    <rect key="frame" x="41" y="122" width="33" height="17"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="--" id="kzo-qf-5qe">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lhL-Z1-en3">
+                    <rect key="frame" x="76" y="122" width="100" height="17"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="chapters found" id="JdC-dL-lY3">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <progressIndicator hidden="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="z8X-kB-7Vz">
+                    <rect key="frame" x="20" y="123" width="16" height="16"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                </progressIndicator>
             </subviews>
         </customView>
+        <userDefaultsController representsSharedInstance="YES" id="hGb-KM-4FU"/>
     </objects>
 </document>

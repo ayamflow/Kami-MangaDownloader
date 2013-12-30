@@ -37,19 +37,20 @@
 - (void)save {
     NSString *savePlist = [self getSavePlistPath];
     [self.bookmarks writeToFile:savePlist atomically:YES];
+    NSLog(@"saved bookmarks %@", self.bookmarks);
 }
 
 - (void)load {
     NSString *savePlist = [self getSavePlistPath];
 
-    NSError *error;
-    if(![[NSFileManager defaultManager] removeItemAtPath:savePlist error:&error])
-    {
+    if(![[NSFileManager defaultManager] fileExistsAtPath:savePlist]) {
         self.bookmarks = [NSMutableArray array];
+        [self save];
     }
     else {
         self.bookmarks = [NSMutableArray arrayWithContentsOfFile:savePlist];
     }
+    NSLog(@"%@", savePlist);
 }
 
 - (void)addBookmarkWithURL:(NSString *)url {

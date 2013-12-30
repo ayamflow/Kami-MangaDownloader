@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4F78BD691871C54D009F16A4 /* DownloadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F78BD681871C54D009F16A4 /* DownloadManager.m */; };
 		4F81C56018718E4A00715DA8 /* NSString+Common.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F81C55F18718E4A00715DA8 /* NSString+Common.m */; };
 		4F81C56818718E5400715DA8 /* TFHpple.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F81C56318718E5400715DA8 /* TFHpple.m */; };
 		4F81C56918718E5400715DA8 /* TFHppleElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F81C56518718E5400715DA8 /* TFHppleElement.m */; };
@@ -26,8 +27,6 @@
 		CE0A36A4186DF45F001A3088 /* MangaKeeperTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CE0A36A3186DF45F001A3088 /* MangaKeeperTests.m */; };
 		CE0A36B0186DF735001A3088 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE0A36AE186DF735001A3088 /* MasterViewController.m */; };
 		CE0A36B1186DF735001A3088 /* MasterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE0A36AF186DF735001A3088 /* MasterViewController.xib */; };
-		CE0A36BA186DF902001A3088 /* ChapterParser.m in Sources */ = {isa = PBXBuildFile; fileRef = CE0A36B8186DF902001A3088 /* ChapterParser.m */; };
-		CE0A36BB186DF902001A3088 /* ChapterParser.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE0A36B9186DF902001A3088 /* ChapterParser.xib */; };
 		CEEAF5DF18702F72000E1500 /* BookmarkModel.m in Sources */ = {isa = PBXBuildFile; fileRef = CEEAF5DE18702F72000E1500 /* BookmarkModel.m */; };
 		CEEAF5E218702FA0000E1500 /* BookmarksManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CEEAF5E118702FA0000E1500 /* BookmarksManager.m */; };
 /* End PBXBuildFile section */
@@ -43,6 +42,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4F78BD671871C54D009F16A4 /* DownloadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DownloadManager.h; path = Modules/DownloadManager.h; sourceTree = "<group>"; };
+		4F78BD681871C54D009F16A4 /* DownloadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DownloadManager.m; path = Modules/DownloadManager.m; sourceTree = "<group>"; };
 		4F81C55E18718E4A00715DA8 /* NSString+Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+Common.h"; path = "Libs/NSString+Common/NSString+Common.h"; sourceTree = "<group>"; };
 		4F81C55F18718E4A00715DA8 /* NSString+Common.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+Common.m"; path = "Libs/NSString+Common/NSString+Common.m"; sourceTree = "<group>"; };
 		4F81C56218718E5400715DA8 /* TFHpple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TFHpple.h; path = Libs/hpple/TFHpple.h; sourceTree = "<group>"; };
@@ -76,9 +77,6 @@
 		CE0A36AD186DF735001A3088 /* MasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MasterViewController.h; sourceTree = "<group>"; };
 		CE0A36AE186DF735001A3088 /* MasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
 		CE0A36AF186DF735001A3088 /* MasterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MasterViewController.xib; sourceTree = "<group>"; };
-		CE0A36B7186DF902001A3088 /* ChapterParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChapterParser.h; path = Modules/ChapterParser/ChapterParser.h; sourceTree = "<group>"; };
-		CE0A36B8186DF902001A3088 /* ChapterParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChapterParser.m; path = Modules/ChapterParser/ChapterParser.m; sourceTree = "<group>"; };
-		CE0A36B9186DF902001A3088 /* ChapterParser.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ChapterParser.xib; path = Modules/ChapterParser/ChapterParser.xib; sourceTree = "<group>"; };
 		CEEAF5DD18702F72000E1500 /* BookmarkModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BookmarkModel.h; path = Models/BookmarkModel.h; sourceTree = "<group>"; };
 		CEEAF5DE18702F72000E1500 /* BookmarkModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BookmarkModel.m; path = Models/BookmarkModel.m; sourceTree = "<group>"; };
 		CEEAF5E018702FA0000E1500 /* BookmarksManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BookmarksManager.h; path = Models/BookmarksManager.h; sourceTree = "<group>"; };
@@ -212,9 +210,7 @@
 		CE0A36B2186DF805001A3088 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				CE0A36B6186DF8C2001A3088 /* ChapterParser */,
-				CE0A36B5186DF8B5001A3088 /* DownloadQueue */,
-				CE0A36B4186DF8A0001A3088 /* ChapterList */,
+				CE0A36B5186DF8B5001A3088 /* DownloadManager */,
 			);
 			name = Modules;
 			sourceTree = "<group>";
@@ -226,28 +222,13 @@
 			name = Assets;
 			sourceTree = "<group>";
 		};
-		CE0A36B4186DF8A0001A3088 /* ChapterList */ = {
+		CE0A36B5186DF8B5001A3088 /* DownloadManager */ = {
 			isa = PBXGroup;
 			children = (
+				4F78BD671871C54D009F16A4 /* DownloadManager.h */,
+				4F78BD681871C54D009F16A4 /* DownloadManager.m */,
 			);
-			name = ChapterList;
-			sourceTree = "<group>";
-		};
-		CE0A36B5186DF8B5001A3088 /* DownloadQueue */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = DownloadQueue;
-			sourceTree = "<group>";
-		};
-		CE0A36B6186DF8C2001A3088 /* ChapterParser */ = {
-			isa = PBXGroup;
-			children = (
-				CE0A36B7186DF902001A3088 /* ChapterParser.h */,
-				CE0A36B8186DF902001A3088 /* ChapterParser.m */,
-				CE0A36B9186DF902001A3088 /* ChapterParser.xib */,
-			);
-			name = ChapterParser;
+			name = DownloadManager;
 			sourceTree = "<group>";
 		};
 		CE0A36BC186E0367001A3088 /* Libs */ = {
@@ -357,7 +338,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE0A36BB186DF902001A3088 /* ChapterParser.xib in Resources */,
 				CE0A36B1186DF735001A3088 /* MasterViewController.xib in Resources */,
 				CE0A3684186DF45F001A3088 /* InfoPlist.strings in Resources */,
 				CE0A3692186DF45F001A3088 /* Images.xcassets in Resources */,
@@ -384,11 +364,11 @@
 				CE0A368D186DF45F001A3088 /* AppDelegate.m in Sources */,
 				CEEAF5E218702FA0000E1500 /* BookmarksManager.m in Sources */,
 				4F81C56A18718E5400715DA8 /* XPathQuery.m in Sources */,
+				4F78BD691871C54D009F16A4 /* DownloadManager.m in Sources */,
 				4F81C56018718E4A00715DA8 /* NSString+Common.m in Sources */,
 				4F81C56F1871905500715DA8 /* ChapterModel.m in Sources */,
 				CEEAF5DF18702F72000E1500 /* BookmarkModel.m in Sources */,
 				CE0A36B0186DF735001A3088 /* MasterViewController.m in Sources */,
-				CE0A36BA186DF902001A3088 /* ChapterParser.m in Sources */,
 				4F81C56918718E5400715DA8 /* TFHppleElement.m in Sources */,
 				CE0A3686186DF45F001A3088 /* main.m in Sources */,
 				4F81C56818718E5400715DA8 /* TFHpple.m in Sources */,

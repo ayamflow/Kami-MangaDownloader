@@ -16,5 +16,7 @@
 @property (weak) IBOutlet NSButton *removeBookmarkButton;
 @property (weak) IBOutlet NSTableView *chapterListView;
 @property (weak) IBOutlet NSButton *downloadButton;
+@property (weak) IBOutlet NSTextField *chaptersNumberLabel;
+@property (weak) IBOutlet NSProgressIndicator *progressIndicator;
 
 @end
