@@ -10,4 +10,11 @@
 
 @implementation ChapterModel
 
+- (void)download {
+    self.pagesNumber = [self.mangaSite getPagesNumberForChapter:self];
+    self.imagesURLs = [self.mangaSite getImagesURLsForChapter:self];
+    
+    NSLog(@"Downloading chapter %@ with %@ pages.", self.title, self.pagesNumber);
+}
+
 @end

@@ -14,13 +14,13 @@
 #import "ChapterModel.h"
 #import "DownloadManager.h"
 #import "MangaSite.h"
+#import "SearchModel.h"
 #import "MangaReader.h"
 
 @interface MasterViewController ()
 
-@property (strong, nonatomic) NSArray *chaptersList;
 @property (strong, nonatomic) NSArray *chaptersModels;
-@property (strong, nonatomic) NSObject<MangaSite> *siteContent;
+@property (strong, nonatomic) NSObject<MangaSite> *currentMangaSite;
 
 @end
 
@@ -30,7 +30,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        [self restoreBookmarks];
+
     }
     return self;
 }
@@ -45,18 +45,18 @@
 
     NSURL *inputURL = [NSURL URLWithString:url];
 
-    NSString *host = [inputURL host];
-    if([host isEqualToString:@"mangareader.net"]) {
-        self.siteContent = [[MangaReader alloc] init];
+    SearchModel *search = [[SearchModel alloc] init];
+    search.url = inputURL;
+    
+    if([search.host isEqualToString:@"mangareader.net"]) {
+        self.currentMangaSite = [[MangaReader alloc] initWithSearch:search];
     }
 
-    if(self.siteContent != nil) {
-        self.chaptersModels = [self.siteContent getChaptersListWithURL:inputURL];
-        self.chaptersList = [self.chaptersModels valueForKey:@"title"];
+    if(self.currentMangaSite != nil) {
+        self.chaptersModels = [self.currentMangaSite getChaptersList];
     }
     else {
         self.chaptersModels = [NSArray array];
-        self.chaptersList = [NSArray array];
     }
 
     [self.chapterListView reloadData];
@@ -64,52 +64,28 @@
     [self.chaptersNumberLabel setStringValue:[NSString stringWithFormat:@"%li", [self.chaptersModels count]]];
 }
 
+#pragma Chapters selection Management
+
+- (IBAction)selectAllChapters:(id)sender {
+    [self.chapterListView selectAll:nil];
+}
+
+- (IBAction)selectNoneChapter:(id)sender {
+    [self.chapterListView deselectAll:nil];
+}
+
 #pragma  Download queue Management
 
 - (IBAction)addSelectionToDownloadQueue:(id)sender {
     [self showProgressIndicator];
-    NSIndexSet *selectedChapters = [self.chapterListView selectedRowIndexes];
-//    [self.siteContent getImagesListForChapters:selectedChapters withModels:self.chaptersModels];
+    NSIndexSet *selectedChaptersIndexes = [self.chapterListView selectedRowIndexes];
+    [selectedChaptersIndexes enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop) {
+        [[self.chaptersModels objectAtIndex:index] download];
+    }];
     [self hideProgressIndicator];
 }
 
-- (void)getPagesURLWithChapter:(ChapterModel *)chapter {
-    NSURL *chapterURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", chapter.host, chapter.url]];
-    NSData *htmlData = [NSData dataWithContentsOfURL:chapterURL];
-    TFHpple *htmlParser = [TFHpple hppleWithHTMLData:htmlData];
-    
-    // Get number of pages
-    NSString *pagesNumberQuery = @"//select[@id='pageMenu']";
-    NSArray *pagesNumberNodes = [htmlParser searchWithXPathQuery:pagesNumberQuery];
-    NSInteger pagesNumber = [[(TFHppleElement *)[pagesNumberNodes objectAtIndex:0] children] count];
-    
-    // Get URL of pages
-    NSString *pagesURLQuery = @"//select[@id='pageMenu']/option";
-    NSArray *pagesURLNodes = [htmlParser searchWithXPathQuery:pagesURLQuery];
-    NSMutableArray *pagesURLs = [NSMutableArray arrayWithCapacity:pagesNumber];
-    for(TFHppleElement *element in pagesURLNodes) {
-        [pagesURLs addObject:[[element attributes] objectForKey:@"value"]];
-    }
-    
-    // Get URL of images
-    NSMutableArray *imagesURL = [NSMutableArray arrayWithCapacity: pagesNumber];
-    for(NSString *url in pagesURLs) {
-        NSURL *pageURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", chapter.host, url]];
-        NSData *htmlData = [NSData dataWithContentsOfURL:pageURL];
-        TFHpple *htmlParser = [TFHpple hppleWithHTMLData:htmlData];
-        
-        NSString *imageQuery = @"//img[@id='img']";
-        NSArray *imageNodes = [htmlParser searchWithXPathQuery:imageQuery];
-        NSString *imageURL = [[(TFHppleElement *)[imageNodes objectAtIndex:0] attributes] objectForKey:@"src"];
-        [imagesURL addObject:imageURL];
-    }
-}
-
 #pragma Bookmark Management
-
-- (void)restoreBookmarks {
-    NSLog(@"%@", [[BookmarksManager sharedInstance] getBookmarks]);
-}
 
 - (IBAction)addBookmark:(id)sender {
     [[BookmarksManager sharedInstance] addBookmarkWithURL:[self.urlInput stringValue]];
@@ -134,11 +110,11 @@
 #pragma  NSTableView delegate/datasource
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
-    return [self.chaptersList count];
+    return [self.chaptersModels count];
 }
 
 - (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
-    return [self.chaptersList objectAtIndex:row];
+    return [[self.chaptersModels objectAtIndex:row] title];
 }
 
 #pragma Progress indicator

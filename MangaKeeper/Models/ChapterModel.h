@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "MangaSite.h"
 
 @interface ChapterModel : NSObject
 
@@ -15,8 +16,8 @@
 @property (strong, nonatomic) NSString *host;
 @property (strong, nonatomic) NSArray *imagesURLs;
 @property (strong, nonatomic) NSNumber *pagesNumber;
+@property (strong, nonatomic) NSObject<MangaSite> *mangaSite;
 
-- (NSArray *)getImagesURLs;
 - (void)download;
 
 @end

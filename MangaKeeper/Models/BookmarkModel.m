@@ -17,4 +17,15 @@
     return self;
 }
 
+#pragma NSCoding protocol
+
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+    [aCoder encodeObject:self.url forKey:@"URL"];
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    NSString *url = [aDecoder decodeObjectForKey:@"URL"];
+    return [self initWithURL:url];
+}
+
 @end

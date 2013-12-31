@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface BookmarkModel : NSObject
+@interface BookmarkModel : NSObject <NSCoding>
 
 @property (strong, nonatomic) NSString *url;
 

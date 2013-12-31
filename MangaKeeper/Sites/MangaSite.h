@@ -7,8 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "ChapterModel.h"
 #import "TFHpple.h"
+#import "SearchModel.h"
+
+@class ChapterModel;
 
 @protocol MangaSite <NSObject>
 
@@ -16,10 +18,11 @@
 
 @property (strong, nonatomic) NSString *title;
 @property (strong, nonatomic) NSString *host;
-@property (strong, nonatomic) TFHpple *parser;
+@property (strong, nonatomic) SearchModel *search;
 
+- (id)initWithSearch:(SearchModel *)searchModel;
+- (NSArray *)getChaptersList;
 - (NSNumber *)getPagesNumberForChapter:(ChapterModel *)chapter;
-- (NSArray *)getChaptersListWithURL:(NSURL *)url;
-- (NSArray *)getPagesForChapters:(NSIndexSet *)indexSet withModels:(NSArray *)chapterModels;
+- (NSArray *)getImagesURLsForChapter:(ChapterModel *)chapter;
 
 @end
