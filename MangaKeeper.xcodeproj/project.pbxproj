@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4F1251EA1873148800F13250 /* DownloadItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1251E91873148800F13250 /* DownloadItem.m */; };
 		4F6ACA821872C8E40008FEB6 /* SearchModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F6ACA811872C8E40008FEB6 /* SearchModel.m */; };
-		4F78BD691871C54D009F16A4 /* DownloadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F78BD681871C54D009F16A4 /* DownloadManager.m */; };
 		4F78BD6E1871EE47009F16A4 /* MangaReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F78BD6D1871EE47009F16A4 /* MangaReader.m */; };
 		4F81C56018718E4A00715DA8 /* NSString+Common.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F81C55F18718E4A00715DA8 /* NSString+Common.m */; };
 		4F81C56818718E5400715DA8 /* TFHpple.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F81C56318718E5400715DA8 /* TFHpple.m */; };
@@ -44,10 +44,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4F1251E81873148800F13250 /* DownloadItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DownloadItem.h; path = DownloadManager/DownloadItem.h; sourceTree = "<group>"; };
+		4F1251E91873148800F13250 /* DownloadItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DownloadItem.m; path = DownloadManager/DownloadItem.m; sourceTree = "<group>"; };
 		4F6ACA801872C8E40008FEB6 /* SearchModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchModel.h; path = Models/SearchModel.h; sourceTree = "<group>"; };
 		4F6ACA811872C8E40008FEB6 /* SearchModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SearchModel.m; path = Models/SearchModel.m; sourceTree = "<group>"; };
-		4F78BD671871C54D009F16A4 /* DownloadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DownloadManager.h; path = Modules/DownloadManager.h; sourceTree = "<group>"; };
-		4F78BD681871C54D009F16A4 /* DownloadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DownloadManager.m; path = Modules/DownloadManager.m; sourceTree = "<group>"; };
 		4F78BD6C1871EE47009F16A4 /* MangaReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MangaReader.h; path = Sites/MangaReader.h; sourceTree = "<group>"; };
 		4F78BD6D1871EE47009F16A4 /* MangaReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MangaReader.m; path = Sites/MangaReader.m; sourceTree = "<group>"; };
 		4F78BD701871EE98009F16A4 /* MangaSite.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MangaSite.h; path = Sites/MangaSite.h; sourceTree = "<group>"; };
@@ -190,7 +190,7 @@
 				CEEAF5DC18702F5E000E1500 /* Models */,
 				CE0A36BC186E0367001A3088 /* Libs */,
 				CE0A36B3186DF860001A3088 /* Assets */,
-				CE0A36B2186DF805001A3088 /* Modules */,
+				CE0A36B5186DF8B5001A3088 /* DownloadManager */,
 				CE0A368B186DF45F001A3088 /* AppDelegate.h */,
 				CE0A368C186DF45F001A3088 /* AppDelegate.m */,
 				CE0A368E186DF45F001A3088 /* MainMenu.xib */,
@@ -233,14 +233,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		CE0A36B2186DF805001A3088 /* Modules */ = {
-			isa = PBXGroup;
-			children = (
-				CE0A36B5186DF8B5001A3088 /* DownloadManager */,
-			);
-			name = Modules;
-			sourceTree = "<group>";
-		};
 		CE0A36B3186DF860001A3088 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
@@ -251,8 +243,8 @@
 		CE0A36B5186DF8B5001A3088 /* DownloadManager */ = {
 			isa = PBXGroup;
 			children = (
-				4F78BD671871C54D009F16A4 /* DownloadManager.h */,
-				4F78BD681871C54D009F16A4 /* DownloadManager.m */,
+				4F1251E81873148800F13250 /* DownloadItem.h */,
+				4F1251E91873148800F13250 /* DownloadItem.m */,
 			);
 			name = DownloadManager;
 			sourceTree = "<group>";
@@ -393,9 +385,9 @@
 				4F81C56F1871905500715DA8 /* ChapterModel.m in Sources */,
 				4F6ACA821872C8E40008FEB6 /* SearchModel.m in Sources */,
 				CEEAF5E218702FA0000E1500 /* BookmarksManager.m in Sources */,
+				4F1251EA1873148800F13250 /* DownloadItem.m in Sources */,
 				4F81C56A18718E5400715DA8 /* XPathQuery.m in Sources */,
 				4F78BD6E1871EE47009F16A4 /* MangaReader.m in Sources */,
-				4F78BD691871C54D009F16A4 /* DownloadManager.m in Sources */,
 				4F81C56018718E4A00715DA8 /* NSString+Common.m in Sources */,
 				CEEAF5DF18702F72000E1500 /* BookmarkModel.m in Sources */,
 				CE0A36B0186DF735001A3088 /* MasterViewController.m in Sources */,

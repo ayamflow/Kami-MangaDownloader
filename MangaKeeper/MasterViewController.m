@@ -12,7 +12,6 @@
 #import "BookmarkModel.h"
 #import "TFHpple.h"
 #import "ChapterModel.h"
-#import "DownloadManager.h"
 #import "MangaSite.h"
 #import "SearchModel.h"
 #import "MangaReader.h"

@@ -7,6 +7,7 @@
 //
 
 #import "ChapterModel.h"
+#import "DownloadItem.h"
 
 @implementation ChapterModel
 
@@ -15,6 +16,9 @@
     self.imagesURLs = [self.mangaSite getImagesURLsForChapter:self];
     
     NSLog(@"Downloading chapter %@ with %@ pages.", self.title, self.pagesNumber);
+    
+    DownloadItem *item = [[DownloadItem alloc] initWithURL:[self.imagesURLs objectAtIndex:0]];
+    [item start];
 }
 
 @end
