@@ -27,6 +27,7 @@
     }
     return sharedInstance;
 }
+
 - (id)init {
     if(self = [super init]) {
         [self load];

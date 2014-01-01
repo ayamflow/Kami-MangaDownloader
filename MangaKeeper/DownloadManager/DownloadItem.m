@@ -10,11 +10,8 @@
 
 @interface DownloadItem ()
 
-@property (strong, nonatomic) NSURL *url;
-@property (strong, nonatomic) NSString *fileName;
 @property (strong, nonatomic) NSMutableData *data;
 @property (strong, nonatomic) NSURLConnection *connection;
-@property (assign, nonatomic) CGFloat progress;
 @property (assign, nonatomic) NSInteger expectedBytes;
 
 @end
@@ -40,6 +37,14 @@
     self.connection = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:YES];
 }
 
+#pragma NSOperation overrides
+
+- (void)cancel {
+    self.data = nil;
+    [self.connection cancel];
+    [super cancel];
+}
+
 #pragma NSURLConnection delegate
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
@@ -50,7 +55,6 @@
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     [self.data appendData:data];
     self.progress = (CGFloat)[self.data length] / (CGFloat)self.expectedBytes;
-//    NSLog(@"Progress: %f", self.progress);
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
@@ -62,13 +66,12 @@
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
-//    NSString *filePath = [NSString stringWithFormat:@"%@", self.url]; // Pref download path + chapter title + filename
     NSUserDefaults *userPreferences = [NSUserDefaults standardUserDefaults];
     NSString *downloadDirectory = [userPreferences stringForKey:@"downloadDirectory"];
     NSString *filePath = [downloadDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@", self.fileName]];
 
-    NSLog(@"Download of %@ complete", filePath);
     [self.data writeToFile:filePath atomically:YES];
+    [self.delegate itemDidCompleteDownload:self];
 }
 
 @end

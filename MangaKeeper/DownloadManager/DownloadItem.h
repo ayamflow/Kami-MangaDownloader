@@ -7,8 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "DownloadItemDelegate.h"
 
-@interface DownloadItem : NSObject <NSURLConnectionDataDelegate>
+@interface DownloadItem : NSOperation <NSURLConnectionDataDelegate>
+
+@property (strong, nonatomic) NSURL *url;
+@property (strong, nonatomic) NSString *fileName;
+@property (assign, nonatomic) CGFloat progress;
+@property (weak, nonatomic) id<DownloadItemDelegate> delegate;
 
 - (id)initWithURL:(NSString *)url andDirectory:(NSString *)directory;
 - (void)start;

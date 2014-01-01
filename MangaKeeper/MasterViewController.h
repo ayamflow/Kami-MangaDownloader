@@ -18,5 +18,7 @@
 @property (weak) IBOutlet NSButton *downloadButton;
 @property (weak) IBOutlet NSTextField *chaptersNumberLabel;
 @property (weak) IBOutlet NSProgressIndicator *progressIndicator;
+@property (weak) IBOutlet NSTextField *connectionsNumberInput;
+@property (weak) IBOutlet NSStepper *stepper;
 
 @end

@@ -15,11 +15,13 @@
 #import "MangaSite.h"
 #import "SearchModel.h"
 #import "MangaReader.h"
+#import "DownloadManager.h"
 
 @interface MasterViewController ()
 
 @property (strong, nonatomic) NSArray *chaptersModels;
 @property (strong, nonatomic) NSObject<MangaSite> *currentMangaSite;
+@property (assign, nonatomic) NSInteger connectionsNumber;
 
 @end
 
@@ -29,7 +31,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-
+        self.connectionsNumber = 1;
     }
     return self;
 }
@@ -82,6 +84,16 @@
         [[self.chaptersModels objectAtIndex:index] download];
     }];
     [self hideProgressIndicator];
+}
+
+#pragma Connections number Management
+- (IBAction)connectionsNumberUpdated:(id)sender {
+    self.connectionsNumber = MAX(0, MIN(10, self.connectionsNumber));
+}
+
+- (void)setConnectionsNumber:(NSInteger)connectionsNumber {
+    _connectionsNumber = connectionsNumber;
+    [[DownloadManager sharedInstance] setConnectionsNumber:connectionsNumber];
 }
 
 #pragma Bookmark Management

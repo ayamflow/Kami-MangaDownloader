@@ -8,6 +8,7 @@
 
 #import "ChapterModel.h"
 #import "DownloadItem.h"
+#import "DownloadManager.h"
 
 @implementation ChapterModel
 
@@ -31,7 +32,7 @@
 
     for(NSString *pageURL in self.imagesURLs) {
         DownloadItem *item = [[DownloadItem alloc] initWithURL:pageURL andDirectory:self.title];
-        [item start];
+        [[DownloadManager sharedInstance] addToQueue:item];
     }
 }
 
