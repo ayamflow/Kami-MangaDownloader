@@ -29,6 +29,8 @@
 		CE0A36A4186DF45F001A3088 /* MangaKeeperTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CE0A36A3186DF45F001A3088 /* MangaKeeperTests.m */; };
 		CE0A36B0186DF735001A3088 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE0A36AE186DF735001A3088 /* MasterViewController.m */; };
 		CE0A36B1186DF735001A3088 /* MasterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE0A36AF186DF735001A3088 /* MasterViewController.xib */; };
+		CECB4AC218749D9E00ED5372 /* PreferencesPane.xib in Resources */ = {isa = PBXBuildFile; fileRef = CECB4AC118749D9E00ED5372 /* PreferencesPane.xib */; };
+		CECB4AC91874A12500ED5372 /* PreferencesPaneWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = CECB4AC81874A12500ED5372 /* PreferencesPaneWindowController.m */; };
 		CEEAF5DF18702F72000E1500 /* BookmarkModel.m in Sources */ = {isa = PBXBuildFile; fileRef = CEEAF5DE18702F72000E1500 /* BookmarkModel.m */; };
 		CEEAF5E218702FA0000E1500 /* BookmarksManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CEEAF5E118702FA0000E1500 /* BookmarksManager.m */; };
 /* End PBXBuildFile section */
@@ -84,6 +86,9 @@
 		CE0A36AD186DF735001A3088 /* MasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MasterViewController.h; sourceTree = "<group>"; };
 		CE0A36AE186DF735001A3088 /* MasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
 		CE0A36AF186DF735001A3088 /* MasterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MasterViewController.xib; sourceTree = "<group>"; };
+		CECB4AC118749D9E00ED5372 /* PreferencesPane.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreferencesPane.xib; sourceTree = "<group>"; };
+		CECB4AC71874A12500ED5372 /* PreferencesPaneWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreferencesPaneWindowController.h; sourceTree = "<group>"; };
+		CECB4AC81874A12500ED5372 /* PreferencesPaneWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreferencesPaneWindowController.m; sourceTree = "<group>"; };
 		CEEAF5DD18702F72000E1500 /* BookmarkModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BookmarkModel.h; path = Models/BookmarkModel.h; sourceTree = "<group>"; };
 		CEEAF5DE18702F72000E1500 /* BookmarkModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BookmarkModel.m; path = Models/BookmarkModel.m; sourceTree = "<group>"; };
 		CEEAF5E018702FA0000E1500 /* BookmarksManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BookmarksManager.h; path = Models/BookmarksManager.h; sourceTree = "<group>"; };
@@ -199,6 +204,7 @@
 				CE0A36AD186DF735001A3088 /* MasterViewController.h */,
 				CE0A36AE186DF735001A3088 /* MasterViewController.m */,
 				CE0A36AF186DF735001A3088 /* MasterViewController.xib */,
+				CECB4AC618749F3D00ED5372 /* PreferencesPane */,
 			);
 			path = MangaKeeper;
 			sourceTree = "<group>";
@@ -265,6 +271,16 @@
 				4F81C55F18718E4A00715DA8 /* NSString+Common.m */,
 			);
 			name = "NSString+Common";
+			sourceTree = "<group>";
+		};
+		CECB4AC618749F3D00ED5372 /* PreferencesPane */ = {
+			isa = PBXGroup;
+			children = (
+				CECB4AC118749D9E00ED5372 /* PreferencesPane.xib */,
+				CECB4AC71874A12500ED5372 /* PreferencesPaneWindowController.h */,
+				CECB4AC81874A12500ED5372 /* PreferencesPaneWindowController.m */,
+			);
+			name = PreferencesPane;
 			sourceTree = "<group>";
 		};
 		CEEAF5DC18702F5E000E1500 /* Models */ = {
@@ -360,6 +376,7 @@
 			files = (
 				CE0A36B1186DF735001A3088 /* MasterViewController.xib in Resources */,
 				CE0A3684186DF45F001A3088 /* InfoPlist.strings in Resources */,
+				CECB4AC218749D9E00ED5372 /* PreferencesPane.xib in Resources */,
 				CE0A3692186DF45F001A3088 /* Images.xcassets in Resources */,
 				CE0A368A186DF45F001A3088 /* Credits.rtf in Resources */,
 				CE0A3690186DF45F001A3088 /* MainMenu.xib in Resources */,
@@ -389,6 +406,7 @@
 				4F81C56A18718E5400715DA8 /* XPathQuery.m in Sources */,
 				4F78BD6E1871EE47009F16A4 /* MangaReader.m in Sources */,
 				4F81C56018718E4A00715DA8 /* NSString+Common.m in Sources */,
+				CECB4AC91874A12500ED5372 /* PreferencesPaneWindowController.m in Sources */,
 				CEEAF5DF18702F72000E1500 /* BookmarkModel.m in Sources */,
 				CE0A36B0186DF735001A3088 /* MasterViewController.m in Sources */,
 				4F81C56918718E5400715DA8 /* TFHppleElement.m in Sources */,

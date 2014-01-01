@@ -16,8 +16,20 @@
     self.imagesURLs = [self.mangaSite getImagesURLsForChapter:self];
     
     NSLog(@"Downloading chapter %@ with %@ pages.", self.title, self.pagesNumber);
-    
-    DownloadItem *item = [[DownloadItem alloc] initWithURL:[self.imagesURLs objectAtIndex:0]];
+
+    NSUserDefaults *userPreferences = [NSUserDefaults standardUserDefaults];
+    NSString *downloadDirectory = [userPreferences stringForKey:@"downloadDirectory"];
+    NSString *chapterPath = [downloadDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@", self.title]];
+
+    BOOL isDir;
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if(![fileManager fileExistsAtPath:chapterPath isDirectory:&isDir]) { // Pref download file + chapter title
+        if(![fileManager createDirectoryAtPath:chapterPath withIntermediateDirectories:YES attributes:nil error:NULL]) {
+            NSLog(@"Error: Create folder failed %@", chapterPath);
+        }
+    }
+
+    DownloadItem *item = [[DownloadItem alloc] initWithURL:[self.imagesURLs objectAtIndex:0] andDirectory:self.title];
     [item start];
 }
 

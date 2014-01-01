@@ -11,19 +11,22 @@
 @interface DownloadItem ()
 
 @property (strong, nonatomic) NSURL *url;
-@property (strong, nonatomic) NSURLRequest *request;
-@property (strong, nonatomic) NSURLDownload *download;
+@property (strong, nonatomic) NSString *fileName;
+@property (strong, nonatomic) NSMutableData *data;
+@property (strong, nonatomic) NSURLConnection *connection;
 @property (assign, nonatomic) CGFloat progress;
-@property (assign, nonatomic) NSInteger bytesReceived;
-@property (strong, nonatomic) NSURLResponse *response;
+@property (assign, nonatomic) NSInteger expectedBytes;
 
 @end
 
 @implementation DownloadItem
 
-- (id)initWithURL:(NSURL *)url {
+- (id)initWithURL:(NSString *)url andDirectory:(NSString *)directory {
     if(self = [super init]) {
-        self.url = url;
+        self.url = [NSURL URLWithString:url];
+
+        NSArray *urlParts = [url componentsSeparatedByString:@"/"];
+        self.fileName = [NSString stringWithFormat:@"%@/%@", directory, [urlParts lastObject]];
     }
     return self;
 }
@@ -31,49 +34,41 @@
 - (void)start {
     NSLog(@"Starting to download %@", self.url);
     self.progress = 0;
-    self.request = [NSURLRequest requestWithURL:self.url];
-    self.download = [[NSURLDownload alloc] initWithRequest:self.request delegate:self];
-    
-    if(!self.download) {
-        // It failed
-        NSLog(@"Download failed.");
-    }
+
+    NSURLRequest *request = [NSURLRequest requestWithURL:self.url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:60];
+    self.data = [[NSMutableData alloc] initWithLength:0];
+    self.connection = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:YES];
 }
 
-#pragma NSURLDownload delegate
+#pragma NSURLConnection delegate
 
-- (void)download:(NSURLDownload *)download didReceiveResponse:(NSURLResponse *)response {
-    NSLog(@"didReceiveResponse");
-    self.bytesReceived = 0;
-    self.response = response;
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
+    self.data.length = 0;
+    self.expectedBytes = [response expectedContentLength];
 }
 
-- (void)download:(NSURLDownload *)download didReceiveDataOfLength:(NSUInteger)length {
-    NSLog(@"didReceiveDataOfLength %li", length);
-    NSInteger expectedLength = [self.response expectedContentLength];
-    self.bytesReceived += length;
-    
-    if(expectedLength != NSURLResponseUnknownLength) {
-        self.progress = self.bytesReceived / (CGFloat)expectedLength * 100.0;
-    }
-    
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
+    [self.data appendData:data];
+    self.progress = (CGFloat)[self.data length] / (CGFloat)self.expectedBytes;
     NSLog(@"Progress: %f", self.progress);
 }
 
-- (void)download:(NSURLDownload *)download didFailWithError:(NSError *)error {
-    
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
+    NSLog(@"Download failed with error %@", error);
 }
 
-- (void)downloadDidFinish:(NSURLDownload *)download {
-    NSLog(@"Download complete");
+- (NSCachedURLResponse *)connection:(NSURLConnection *)connection willCacheResponse:(NSCachedURLResponse *)cachedResponse {
+    return nil;
 }
 
-- (void)download:(NSURLDownload *)download decideDestinationWithSuggestedFilename:(NSString *)filename {
-    NSString *destinationFileName;
-    NSString *homeDirectory = NSHomeDirectory();
-    
-    destinationFileName = [[homeDirectory stringByAppendingPathComponent:@"Desktop"] stringByAppendingPathComponent:filename];
-    [self.download setDestination:destinationFileName allowOverwrite:NO];
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
+//    NSString *filePath = [NSString stringWithFormat:@"%@", self.url]; // Pref download path + chapter title + filename
+    NSUserDefaults *userPreferences = [NSUserDefaults standardUserDefaults];
+    NSString *downloadDirectory = [userPreferences stringForKey:@"downloadDirectory"];
+    NSString *filePath = [downloadDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@", self.fileName]];
+
+    NSLog(@"Download of %@ complete", filePath);
+    [self.data writeToFile:filePath atomically:YES];
 }
 
 @end

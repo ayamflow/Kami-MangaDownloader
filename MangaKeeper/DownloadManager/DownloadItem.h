@@ -8,9 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-@interface DownloadItem : NSObject <NSURLDownloadDelegate>
+@interface DownloadItem : NSObject <NSURLConnectionDataDelegate>
 
-- (id)initWithURL:(NSURL *)url;
+- (id)initWithURL:(NSURL *)url andDirectory:(NSString *)directory;
 - (void)start;
 
 @end
