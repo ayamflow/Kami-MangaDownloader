@@ -29,8 +29,10 @@
         }
     }
 
-    DownloadItem *item = [[DownloadItem alloc] initWithURL:[self.imagesURLs objectAtIndex:0] andDirectory:self.title];
-    [item start];
+    for(NSString *pageURL in self.imagesURLs) {
+        DownloadItem *item = [[DownloadItem alloc] initWithURL:pageURL andDirectory:self.title];
+        [item start];
+    }
 }
 
 @end

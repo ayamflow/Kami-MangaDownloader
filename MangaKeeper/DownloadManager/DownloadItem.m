@@ -50,7 +50,7 @@
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     [self.data appendData:data];
     self.progress = (CGFloat)[self.data length] / (CGFloat)self.expectedBytes;
-    NSLog(@"Progress: %f", self.progress);
+//    NSLog(@"Progress: %f", self.progress);
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {

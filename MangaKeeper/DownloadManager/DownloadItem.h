@@ -10,7 +10,7 @@
 
 @interface DownloadItem : NSObject <NSURLConnectionDataDelegate>
 
-- (id)initWithURL:(NSURL *)url andDirectory:(NSString *)directory;
+- (id)initWithURL:(NSString *)url andDirectory:(NSString *)directory;
 - (void)start;
 
 @end
