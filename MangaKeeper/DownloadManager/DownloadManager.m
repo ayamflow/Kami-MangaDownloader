@@ -29,18 +29,26 @@
     return sharedInstance;
 }
 
+- (id)init {
+    if(self = [super init]) {
+        self.downloadQueue = [[NSOperationQueue alloc] init];
+        [self.downloadQueue setSuspended:YES];
+    }
+    return self;
+}
+
 #pragma Flow control
 
-- (void)start {
-
+- (void)resume {
+    [self.downloadQueue setSuspended:NO];
 }
 
 - (void)pause {
-
+    [self.downloadQueue setSuspended:YES];
 }
 
 - (void)stop {
-
+    [self.downloadQueue cancelAllOperations];
 }
 
 #pragma Queue management
@@ -79,6 +87,7 @@
 - (void)itemDidCompleteDownload:(DownloadItem *)item {
     item.delegate = nil;
     self.currentItemsNumber--;
+    [self proceedQueue];
 }
 
 @end

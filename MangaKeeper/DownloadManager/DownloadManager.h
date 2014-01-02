@@ -15,7 +15,7 @@
 @property (assign, nonatomic) NSInteger connectionsNumber;
 
 + (id)sharedInstance;
-- (void)start;
+- (void)resume;
 - (void)pause;
 - (void)stop;
 - (void)addToQueue:(DownloadItem *)item;

@@ -86,6 +86,14 @@
     [self hideProgressIndicator];
 }
 
+- (IBAction)resumeDownloadQueue:(id)sender {
+    [(DownloadManager *)[DownloadManager sharedInstance] resume];
+}
+
+- (IBAction)pauseDownloadQueue:(id)sender {
+    [(DownloadManager *)[DownloadManager sharedInstance] pause];
+}
+
 #pragma Connections number Management
 - (IBAction)connectionsNumberUpdated:(id)sender {
     self.connectionsNumber = MAX(0, MIN(10, self.connectionsNumber));
