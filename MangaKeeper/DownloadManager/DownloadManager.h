@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "DownloadItem.h"
+#import "ProgressDownloadQueue.h"
 
 @interface DownloadManager : NSObject
 
@@ -18,7 +19,7 @@
 - (void)resume;
 - (void)pause;
 - (void)stop;
-- (void)addQueue:(NSOperationQueue *)queue;
-- (void)removeQueue:(NSOperationQueue *)queue;
+- (void)addQueue:(ProgressDownloadQueue *)queue;
+- (void)removeQueue:(ProgressDownloadQueue *)queue;
 
 @end

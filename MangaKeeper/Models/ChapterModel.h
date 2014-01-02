@@ -20,5 +20,6 @@
 @property (strong, nonatomic) NSObject<MangaSite> *mangaSite;
 
 - (void)download;
+- (void)addToDownloadQueue;
 
 @end

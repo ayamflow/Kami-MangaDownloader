@@ -21,5 +21,6 @@
 @property (weak) IBOutlet NSTextField *connectionsNumberInput;
 @property (weak) IBOutlet NSStepper *stepper;
 @property (weak) IBOutlet NSTableView *downloadsListView;
+@property (weak) IBOutlet NSTextField *statusLabel;
 
 @end

@@ -7,10 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ChapterModel.h"
 
 @interface ProgressDownloadQueue : NSOperationQueue
 
 @property (strong, nonatomic) NSString *title;
 @property (assign, nonatomic) CGFloat progress;
+@property (weak, nonatomic) ChapterModel *chapter;
 
 @end

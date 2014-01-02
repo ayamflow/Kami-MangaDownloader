@@ -16,6 +16,7 @@
 #import "SearchModel.h"
 #import "MangaReader.h"
 #import "DownloadManager.h"
+#import "Statuses.h"
 
 @interface MasterViewController ()
 
@@ -32,6 +33,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.connectionsNumber = 1;
+        [self.statusLabel setStringValue:kStatusIdle];
         [[DownloadManager sharedInstance] setConnectionsNumber:self.connectionsNumber];
     }
     return self;
@@ -54,16 +56,31 @@
         self.currentMangaSite = [[MangaReader alloc] initWithSearch:search];
     }
 
+    // Fetch the chapters on a background thread
+    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+    NSInvocationOperation *fetchChaptersListOperation = [[NSInvocationOperation alloc] initWithTarget:self selector:@selector(fetchChaptersList) object:nil];
+    [fetchChaptersListOperation setCompletionBlock:^{
+        [self performSelectorOnMainThread:@selector(chaptersListFetched) withObject:nil waitUntilDone:YES];
+    }];
+
+    [queue addOperation:fetchChaptersListOperation];
+}
+
+- (void)fetchChaptersList {
+    [self.statusLabel setStringValue:kStatusFetchingChaptersList];
     if(self.currentMangaSite != nil) {
         self.chaptersModels = [self.currentMangaSite getChaptersList];
     }
     else {
         self.chaptersModels = [NSArray array];
     }
+}
 
+- (void)chaptersListFetched {
     [self.chapterListView reloadData];
     [self hideProgressIndicator];
     [self.chaptersNumberLabel setStringValue:[NSString stringWithFormat:@"%li", [self.chaptersModels count]]];
+    [self.statusLabel setStringValue:kStatusIdle];
 }
 
 #pragma Chapters selection Management
@@ -76,14 +93,15 @@
     [self.chapterListView deselectAll:nil];
 }
 
-#pragma  Download queue Management
+#pragma Download queue Management
 
 - (IBAction)addSelectionToDownloadQueue:(id)sender {
     [self showProgressIndicator];
     NSIndexSet *selectedChaptersIndexes = [self.chapterListView selectedRowIndexes];
     [selectedChaptersIndexes enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop) {
-        [[self.chaptersModels objectAtIndex:index] download];
+        [[self.chaptersModels objectAtIndex:index] addToDownloadQueue];
     }];
+    [self.downloadsListView reloadData];
     [self hideProgressIndicator];
 }
 
@@ -136,6 +154,13 @@
 
 - (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
     return [[self.chaptersModels objectAtIndex:row] title];
+}
+
+- (void)tableView:(NSTableView *)tableView sortDescriptorsDidChange:(NSArray *)oldDescriptors {
+    NSLog(@"coucou %@", oldDescriptors);
+    NSArray *newDescriptors = [tableView sortDescriptors];
+    [self.chaptersModels sortedArrayUsingDescriptors:newDescriptors];
+    [self.chapterListView reloadData];
 }
 
 #pragma Progress indicator

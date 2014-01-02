@@ -7,12 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "ProgressDownloadQueue.h"
+
+@class  ProgressDownloadQueue;
 
 @protocol DownloadQueueDelegate <NSObject>
 
 @property (strong, nonatomic) ProgressDownloadQueue *downloadQueue;
+@property (strong, nonatomic) NSString *status;
 
 - (void)progressDidUpdate:(CGFloat)progress;
+- (void)pause;
+- (void)resume;
+- (void)complete;
 
 @end
