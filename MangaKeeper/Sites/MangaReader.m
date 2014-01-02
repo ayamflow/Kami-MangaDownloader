@@ -49,13 +49,13 @@
     return chaptersList;
 }
 
-- (NSNumber *)getPagesNumberForChapter:(ChapterModel *)chapter {
+- (NSInteger)getPagesNumberForChapter:(ChapterModel *)chapter {
     NSData *htmlData = [NSData dataWithContentsOfURL:chapter.url];
     TFHpple *parser = [TFHpple hppleWithHTMLData:htmlData];
     NSString *pagesNumberQuery = @"//select[@id='pageMenu']";
     NSArray *pagesNumberNodes = [parser searchWithXPathQuery:pagesNumberQuery];
     
-    return @([[(TFHppleElement *)[pagesNumberNodes objectAtIndex:0] children] count]);
+    return [[(TFHppleElement *)[pagesNumberNodes objectAtIndex:0] children] count];
 }
 
 - (NSArray *)getImagesURLsForChapter:(ChapterModel *)chapter {
@@ -65,7 +65,7 @@
     // Get URL of pages
     NSString *pagesURLQuery = @"//select[@id='pageMenu']/option";
     NSArray *pagesURLNodes = [parser searchWithXPathQuery:pagesURLQuery];
-    NSMutableArray *pagesURLs = [NSMutableArray arrayWithCapacity:[chapter.pagesNumber integerValue]];
+    NSMutableArray *pagesURLs = [NSMutableArray arrayWithCapacity:chapter.pagesNumber];
 
 
     for(TFHppleElement *element in pagesURLNodes) {
@@ -73,7 +73,7 @@
     }
     
     // Get URL of images
-    NSMutableArray *imagesURL = [NSMutableArray arrayWithCapacity: [chapter.pagesNumber integerValue]];
+    NSMutableArray *imagesURL = [NSMutableArray arrayWithCapacity:chapter.pagesNumber];
     for(NSString *url in pagesURLs) {
         NSURL *pageURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", chapter.host, url]];
         NSData *htmlData = [NSData dataWithContentsOfURL:pageURL];

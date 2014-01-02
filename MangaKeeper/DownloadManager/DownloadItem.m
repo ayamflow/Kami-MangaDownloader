@@ -46,7 +46,7 @@
     self.executing = YES;
     [self didChangeValueForKey:@"isExecuting"];
     
-    NSLog(@"Starting to download %@", self.url);
+//    NSLog(@"Starting to download %@", self.url);
     self.progress = 0;
 
     NSURLRequest *request = [NSURLRequest requestWithURL:self.url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:60];
@@ -59,6 +59,8 @@
         [self.connection cancel];
         self.connection = nil;
     }
+    
+    self.delegate = nil;
     
     [self willChangeValueForKey:@"isExecuting"];
     [self willChangeValueForKey:@"isFinished"];
@@ -108,7 +110,7 @@
     
     [self.data appendData:data];
     self.progress = (CGFloat)[self.data length] / (CGFloat)self.expectedBytes;
-    NSLog(@"%@: %li%%", self.fileName, (NSInteger)self.progress * 100);
+    [self.delegate progressDidUpdate:self.progress];
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
@@ -135,7 +137,7 @@
     NSString *filePath = [downloadDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@", self.fileName]];
 
     [self.data writeToFile:filePath atomically:YES];
-    [self.delegate itemDidCompleteDownload:self];
+    [self done];
 }
 
 @end

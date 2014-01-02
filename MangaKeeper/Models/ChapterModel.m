@@ -9,14 +9,17 @@
 #import "ChapterModel.h"
 #import "DownloadItem.h"
 #import "DownloadManager.h"
+#import "ProgressDownloadQueue.h"
 
 @implementation ChapterModel
+
+@synthesize downloadQueue;
 
 - (void)download {
     self.pagesNumber = [self.mangaSite getPagesNumberForChapter:self];
     self.imagesURLs = [self.mangaSite getImagesURLsForChapter:self];
     
-    NSLog(@"Downloading chapter %@ with %@ pages.", self.title, self.pagesNumber);
+    NSLog(@"Downloading chapter %@ with %li pages.", self.title, self.pagesNumber);
 
     NSUserDefaults *userPreferences = [NSUserDefaults standardUserDefaults];
     NSString *downloadDirectory = [userPreferences stringForKey:@"downloadDirectory"];
@@ -30,10 +33,19 @@
         }
     }
 
+    self.downloadQueue = [[ProgressDownloadQueue alloc] init];
+    self.downloadQueue.title = self.title;
     for(NSString *pageURL in self.imagesURLs) {
         DownloadItem *item = [[DownloadItem alloc] initWithURL:pageURL andDirectory:self.title];
-        [[DownloadManager sharedInstance] addToQueue:item];
+        item.delegate = self;
+        [self.downloadQueue addOperation:item];
+        [[DownloadManager sharedInstance] addQueue:self.downloadQueue];
     }
+}
+
+- (void)progressDidUpdate:(CGFloat)progressPercent {
+    CGFloat onePage = 1.0 / (CGFloat)self.pagesNumber;
+    self.downloadQueue.progress = onePage * (self.pagesNumber - self.downloadQueue.operationCount) + progressPercent * onePage;
 }
 
 @end

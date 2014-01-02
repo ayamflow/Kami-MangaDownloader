@@ -32,6 +32,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.connectionsNumber = 1;
+        [[DownloadManager sharedInstance] setConnectionsNumber:self.connectionsNumber];
     }
     return self;
 }
@@ -87,6 +88,7 @@
 }
 
 - (IBAction)resumeDownloadQueue:(id)sender {
+    [self.downloadsListView reloadData];
     [(DownloadManager *)[DownloadManager sharedInstance] resume];
 }
 

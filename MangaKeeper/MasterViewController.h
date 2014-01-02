@@ -20,5 +20,6 @@
 @property (weak) IBOutlet NSProgressIndicator *progressIndicator;
 @property (weak) IBOutlet NSTextField *connectionsNumberInput;
 @property (weak) IBOutlet NSStepper *stepper;
+@property (weak) IBOutlet NSTableView *downloadsListView;
 
 @end

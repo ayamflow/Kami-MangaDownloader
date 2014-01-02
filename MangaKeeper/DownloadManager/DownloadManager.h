@@ -8,17 +8,17 @@
 
 #import <Foundation/Foundation.h>
 #import "DownloadItem.h"
-#import "DownloadItemDelegate.h"
 
-@interface DownloadManager : NSObject <DownloadItemDelegate>
+@interface DownloadManager : NSObject
 
+@property (strong, nonatomic) NSMutableArray *downloadQueues;
 @property (assign, nonatomic) NSInteger connectionsNumber;
 
 + (id)sharedInstance;
 - (void)resume;
 - (void)pause;
 - (void)stop;
-- (void)addToQueue:(DownloadItem *)item;
-- (void)removeFromQueue:(DownloadItem *)item;
+- (void)addQueue:(NSOperationQueue *)queue;
+- (void)removeQueue:(NSOperationQueue *)queue;
 
 @end

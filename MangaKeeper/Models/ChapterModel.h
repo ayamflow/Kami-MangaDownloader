@@ -8,14 +8,15 @@
 
 #import <Foundation/Foundation.h>
 #import "MangaSite.h"
+#import "DownloadQueueDelegate.h"
 
-@interface ChapterModel : NSObject
+@interface ChapterModel : NSObject <DownloadQueueDelegate>
 
 @property (strong, nonatomic) NSString *title;
 @property (strong, nonatomic) NSURL *url;
 @property (strong, nonatomic) NSString *host;
 @property (strong, nonatomic) NSArray *imagesURLs;
-@property (strong, nonatomic) NSNumber *pagesNumber;
+@property (assign, nonatomic) NSInteger pagesNumber;
 @property (strong, nonatomic) NSObject<MangaSite> *mangaSite;
 
 - (void)download;

@@ -22,7 +22,7 @@
 
 - (id)initWithSearch:(SearchModel *)searchModel;
 - (NSArray *)getChaptersList;
-- (NSNumber *)getPagesNumberForChapter:(ChapterModel *)chapter;
+- (NSInteger)getPagesNumberForChapter:(ChapterModel *)chapter;
 - (NSArray *)getImagesURLsForChapter:(ChapterModel *)chapter;
 
 @end

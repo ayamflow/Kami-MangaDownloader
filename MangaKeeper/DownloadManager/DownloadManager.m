@@ -11,10 +11,8 @@
 
 @interface DownloadManager ()
 
-@property (strong, nonatomic) NSOperationQueue *downloadQueue;
+@property (strong, nonatomic) NSOperationQueue *currentQueue;
 @property (strong, nonatomic) NSMutableArray *items;
-@property (assign, nonatomic) NSInteger queuePosition;
-@property (assign, nonatomic) NSInteger currentItemsNumber;
 
 @end
 
@@ -31,8 +29,7 @@
 
 - (id)init {
     if(self = [super init]) {
-        self.downloadQueue = [[NSOperationQueue alloc] init];
-        [self.downloadQueue setSuspended:YES];
+        self.downloadQueues = [NSMutableArray array];
     }
     return self;
 }
@@ -40,54 +37,58 @@
 #pragma Flow control
 
 - (void)resume {
-    [self.downloadQueue setSuspended:NO];
-}
-
-- (void)pause {
-    [self.downloadQueue setSuspended:YES];
-}
-
-- (void)stop {
-    [self.downloadQueue cancelAllOperations];
-}
-
-#pragma Queue management
-
-- (void)addToQueue:(DownloadItem *)item {
-    item.delegate = self;
-    [self.items addObject:item];
-    [self.downloadQueue addOperation:item];
-}
-
-- (void)removeFromQueue:(DownloadItem *)item {
-    item.delegate = nil;
-    [item cancel];
-    [self.items removeObject:item];
-}
-
-- (void)proceedQueue {
-    while(self.currentItemsNumber < self.connectionsNumber) {
-        [self downloadNextItem];
+    if(self.currentQueue != nil) {
+        [self.currentQueue setSuspended:NO];
+    }
+    else if([self.downloadQueues count] > 0) {
+        [self startNextQueue];
     }
 }
 
-- (void)downloadNextItem {
-    self.queuePosition++;
-    self.currentItemsNumber++;
-    DownloadItem *item = [self.items objectAtIndex:self.queuePosition];
-    [item start];
+- (void)pause {
+    if(self.currentQueue == nil) return;
+    [self.currentQueue setSuspended:YES];
+}
+
+- (void)stop {
+    for(NSOperationQueue *queue in self.downloadQueues) {
+        [queue cancelAllOperations];
+        [self.currentQueue removeObserver:self forKeyPath:@"operations"];
+        self.currentQueue = nil;
+    }
+}
+
+- (void)startNextQueue {
+    if([self.downloadQueues count] == 0) return;
+    self.currentQueue = [self.downloadQueues objectAtIndex:0];
+    [self.currentQueue addObserver:self forKeyPath:@"operations" options:0 context:NULL];
+    [self.currentQueue setSuspended:NO];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if(object == self.currentQueue && [keyPath isEqualToString:@"operations"]) {
+        [self.currentQueue removeObserver:self forKeyPath:@"operations"];
+        [self.downloadQueues removeObject:self.currentQueue];
+        [self startNextQueue];
+    }
+}
+
+#pragma Add/remove
+
+- (void)addQueue:(NSOperationQueue *)queue {
+    [queue setSuspended:YES];
+    [self.downloadQueues addObject:queue];
+}
+
+- (void)removeQueue:(NSOperationQueue *)queue {
+    [queue cancelAllOperations];
+    [self.downloadQueues removeObject:queue];
 }
 
 - (void)setConnectionsNumber:(NSInteger)connectionsNumber {
-    self.downloadQueue.maxConcurrentOperationCount = connectionsNumber;
-}
-
-#pragma DownloadItemDelegate
-
-- (void)itemDidCompleteDownload:(DownloadItem *)item {
-    item.delegate = nil;
-    self.currentItemsNumber--;
-    [self proceedQueue];
+    for(NSOperationQueue *queue in self.downloadQueues) {
+        queue.maxConcurrentOperationCount = connectionsNumber;
+    }
 }
 
 @end
