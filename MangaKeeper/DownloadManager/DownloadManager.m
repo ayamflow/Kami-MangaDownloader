@@ -95,7 +95,7 @@
 
 - (void)addQueue:(ProgressDownloadQueue *)queue {
     if([self.downloadQueues indexOfObject:queue] != NSNotFound) return;
-    [queue setSuspended:YES];
+    [queue.chapter resume];
     [self.downloadQueues addObject:queue];
 }
 

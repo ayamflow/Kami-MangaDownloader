@@ -15,6 +15,7 @@
 @property (assign, nonatomic) NSInteger expectedBytes;
 @property (assign, nonatomic) BOOL executing;
 @property (assign, nonatomic) BOOL finished;
+@property (strong, nonatomic) NSString *directory;
 
 @end
 
@@ -26,12 +27,12 @@
 
         NSArray *urlParts = [url componentsSeparatedByString:@"/"];
         self.fileName = [NSString stringWithFormat:@"%@/%@", directory, [urlParts lastObject]];
+        self.directory = directory;
     }
     return self;
 }
 
 - (void)start {
-    
     if(![NSThread isMainThread]) {
         [self performSelectorOnMainThread:@selector(start) withObject:Nil waitUntilDone:NO];
         return;
@@ -134,7 +135,16 @@
     
     NSUserDefaults *userPreferences = [NSUserDefaults standardUserDefaults];
     NSString *downloadDirectory = [userPreferences stringForKey:@"downloadDirectory"];
+    NSString *chapterPath = [downloadDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@", self.directory]];
     NSString *filePath = [downloadDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@", self.fileName]];
+    
+    BOOL isDir;
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if(![fileManager fileExistsAtPath:chapterPath isDirectory:&isDir]) { // Pref download file + chapter title
+        if(![fileManager createDirectoryAtPath:chapterPath withIntermediateDirectories:YES attributes:nil error:NULL]) {
+            NSLog(@"Error: Create folder failed %@", chapterPath);
+        }
+    }
 
     [self.data writeToFile:filePath atomically:YES];
     [self done];

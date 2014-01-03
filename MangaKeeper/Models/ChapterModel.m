@@ -39,6 +39,8 @@
     }
     [[DownloadManager sharedInstance] addQueue:self.downloadQueue];
     self.status = kStatusIdle;
+    
+    [self download];
 }
 
 - (void)download {
@@ -68,17 +70,6 @@
 - (void)dataFetched {
     self.isReady = YES;
     self.isFetching = NO;
-    NSUserDefaults *userPreferences = [NSUserDefaults standardUserDefaults];
-    NSString *downloadDirectory = [userPreferences stringForKey:@"downloadDirectory"];
-    NSString *chapterPath = [downloadDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@", self.title]];
-
-    BOOL isDir;
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    if(![fileManager fileExistsAtPath:chapterPath isDirectory:&isDir]) { // Pref download file + chapter title
-        if(![fileManager createDirectoryAtPath:chapterPath withIntermediateDirectories:YES attributes:nil error:NULL]) {
-            NSLog(@"Error: Create folder failed %@", chapterPath);
-        }
-    }
 
     [self.downloadQueue cancelAllOperations]; // Prevent doubles
 
