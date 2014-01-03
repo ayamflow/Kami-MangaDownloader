@@ -30,6 +30,7 @@
 - (id)init {
     if(self = [super init]) {
         self.downloadQueues = [NSMutableArray array];
+        self.isPaused = YES;
     }
     return self;
 }
@@ -48,33 +49,33 @@
     else if([self.downloadQueues count] > 0) {
         [self startNextQueue];
     }
+    
+    self.isPaused = NO;
 }
 
 - (void)pause {
     if(self.currentQueue == nil) return;
     [self.currentQueue setSuspended:YES];
     [self.currentQueue.chapter pause];
+    
+    self.isPaused = YES;
 }
 
 - (void)stop {
+    [self.currentQueue removeObserver:self forKeyPath:@"operations"];
+    self.currentQueue = nil;
     for(ProgressDownloadQueue *queue in self.downloadQueues) {
         [queue cancelAllOperations];
-        [self.currentQueue removeObserver:self forKeyPath:@"operations"];
-        self.currentQueue = nil;
+        [queue.chapter remove];
     }
+    [self.downloadQueues removeAllObjects];
+    
+    self.isPaused = YES;
 }
 
 - (void)startNextQueue {
     if([self.downloadQueues count] == 0) return;
-//    self.currentQueue = [self.downloadQueues objectAtIndex:0];
-    if(self.currentQueue == nil) {
-        self.currentQueue = [self.downloadQueues objectAtIndex:0];
-    }
-    else {
-        NSUInteger index = [self.downloadQueues indexOfObject:self.currentQueue] + 1;
-        self.currentQueue = [self.downloadQueues objectAtIndex:index];
-    }
-    if(self.currentQueue == nil) return;
+    self.currentQueue = [self.downloadQueues objectAtIndex:0];
 
     [self.currentQueue addObserver:self forKeyPath:@"operations" options:0 context:NULL];
     [self.currentQueue setSuspended:NO];
@@ -84,7 +85,7 @@
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     if(object == self.currentQueue && [keyPath isEqualToString:@"operations"]) {
         [self.currentQueue removeObserver:self forKeyPath:@"operations"];
-//        [self.downloadQueues removeObject:self.currentQueue];
+        [self.downloadQueues removeObject:self.currentQueue];
         [self.currentQueue.chapter complete];
         [self startNextQueue];
     }

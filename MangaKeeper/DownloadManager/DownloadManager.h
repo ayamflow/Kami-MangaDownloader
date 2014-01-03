@@ -14,6 +14,7 @@
 
 @property (strong, nonatomic) NSMutableArray *downloadQueues;
 @property (assign, nonatomic) NSInteger connectionsNumber;
+@property (assign, nonatomic) BOOL isPaused;
 
 + (id)sharedInstance;
 - (void)resume;

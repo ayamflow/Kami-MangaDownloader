@@ -36,6 +36,31 @@
     self.masterViewController.view.frame = ((NSView *)self.window.contentView).bounds;
 }
 
+#pragma Exit application
+
+- (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender {
+    if([self.masterViewController hasPendingDownloads]) {
+        NSAlert *closeAlert = [[NSAlert alloc] init];
+        [closeAlert setMessageText:@"You have active downloads."];
+        [closeAlert setInformativeText:@"All active downloads will be lost. Exit anyway ?"];
+        [closeAlert addButtonWithTitle:@"Cancel"];
+        [closeAlert addButtonWithTitle:@"Exit"];
+        [closeAlert setAlertStyle:NSWarningAlertStyle];
+        [closeAlert beginSheetModalForWindow:[self window] modalDelegate:self didEndSelector:@selector(closeApplicationAlertClosed:returnCode:) contextInfo:nil];
+        return NSTerminateLater;
+    }
+    return NSTerminateNow;
+}
+
+- (void)closeApplicationAlertClosed:(NSAlert *)alert returnCode:(NSInteger)returnCode {
+    if(returnCode == NSAlertSecondButtonReturn) {
+        [NSApp replyToApplicationShouldTerminate:YES];
+    }
+    else {
+        [NSApp replyToApplicationShouldTerminate:NO];
+    }
+}
+
 #pragma Preferences pane
 
 - (IBAction)openPreferencesPane:(id)sender {

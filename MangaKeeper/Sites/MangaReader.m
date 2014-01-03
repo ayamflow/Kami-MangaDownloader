@@ -33,17 +33,21 @@
     NSData *htmlData = [NSData dataWithContentsOfURL:self.search.url];
     TFHpple *parser = [TFHpple hppleWithHTMLData:htmlData];
     
-    NSString *chaptersListQuery = @"//table[@id='listing']/tr/td/a";
+    NSString *chaptersListQuery = @"//table[@id='listing']/tr";
     NSArray *chaptersNodes = [parser searchWithXPathQuery:chaptersListQuery];
 
     NSMutableArray *chaptersList = [NSMutableArray array];
     for(TFHppleElement *element in chaptersNodes) {
-        ChapterModel *chapter = [[ChapterModel alloc] init];
-        chapter.host = [NSString stringWithFormat:@"http://%@", self.host];
-        chapter.url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", chapter.host, [[element attributes] objectForKey:@"href"]]];
-        chapter.title = [[element firstChild] content];
-        chapter.mangaSite = self;
-        [chaptersList addObject:chapter];
+        NSArray *dataNodes = [element childrenWithTagName:@"td"];
+        if([dataNodes count]) {
+            ChapterModel *chapter = [[ChapterModel alloc] init];
+            chapter.host = [NSString stringWithFormat:@"http://%@", self.host];
+            chapter.url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", chapter.host, [[[[dataNodes objectAtIndex:0] firstChildWithTagName:@"a"] attributes] objectForKey:@"href"]]];
+            chapter.title = [[[dataNodes objectAtIndex:0] firstChildWithTagName:@"a"] text];
+            chapter.mangaSite = self;
+            chapter.date = [[[dataNodes objectAtIndex:1] firstChild] content];
+            [chaptersList addObject:chapter];
+        }
     }
 
     return chaptersList;

@@ -23,4 +23,6 @@
 @property (weak) IBOutlet NSTableView *downloadsListView;
 @property (weak) IBOutlet NSTextField *statusLabel;
 
+- (BOOL)hasPendingDownloads;
+
 @end

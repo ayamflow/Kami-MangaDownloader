@@ -114,6 +114,10 @@
     [(DownloadManager *)[DownloadManager sharedInstance] pause];
 }
 
+- (IBAction)stopDownloadQueue:(id)sender {
+    [(DownloadManager *)[DownloadManager sharedInstance] stop];
+}
+
 #pragma Connections number Management
 - (IBAction)connectionsNumberUpdated:(id)sender {
     self.connectionsNumber = MAX(0, MIN(10, self.connectionsNumber));
@@ -153,11 +157,16 @@
 }
 
 - (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
-    return [[self.chaptersModels objectAtIndex:row] title];
+    if([tableColumn.identifier isEqualToString:@"titleColumn"]) {
+        return [[self.chaptersModels objectAtIndex:row] title];
+    }
+    else if([tableColumn.identifier isEqualToString:@"dateColumn"]) {
+        return [[self.chaptersModels objectAtIndex:row] date];
+    }
+    return nil;
 }
 
 - (void)tableView:(NSTableView *)tableView sortDescriptorsDidChange:(NSArray *)oldDescriptors {
-    NSLog(@"coucou %@", oldDescriptors);
     NSArray *newDescriptors = [tableView sortDescriptors];
     [self.chaptersModels sortedArrayUsingDescriptors:newDescriptors];
     [self.chapterListView reloadData];
@@ -173,6 +182,12 @@
 - (void)hideProgressIndicator {
     [self.progressIndicator setHidden:YES];
     [self.progressIndicator stopAnimation:nil];
+}
+
+#pragma Pending downloads
+
+- (BOOL)hasPendingDownloads {
+    return ![[DownloadManager sharedInstance] isPaused];
 }
 
 @end

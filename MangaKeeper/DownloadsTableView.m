@@ -32,14 +32,16 @@
 }
 
 - (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
-    if([tableColumn.identifier isEqualToString:@"titleCell"]) {
+    if([[[DownloadManager sharedInstance] downloadQueues] count] == 0) return nil;
+        
+    if([tableColumn.identifier isEqualToString:@"titleColumn"]) {
         return [[[[DownloadManager sharedInstance] downloadQueues] objectAtIndex:row] title];
     }
-    else if([tableColumn.identifier isEqualToString:@"progressCell"]) {
+    else if([tableColumn.identifier isEqualToString:@"progressColumn"]) {
         CGFloat progress = [[[[DownloadManager sharedInstance] downloadQueues] objectAtIndex:row] progress];
-        return [NSString stringWithFormat:@"%.1f%%", progress];
+        return [NSString stringWithFormat:@"%.1f%%", progress * 100];
     }
-    else if([tableColumn.identifier isEqualToString:@"statusCell"]) {
+    else if([tableColumn.identifier isEqualToString:@"statusColumn"]) {
         return [[[[[DownloadManager sharedInstance] downloadQueues] objectAtIndex:row] chapter] status];
     }
     return nil;

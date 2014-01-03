@@ -14,6 +14,7 @@
 
 @property (strong, nonatomic) NSString *title;
 @property (strong, nonatomic) NSURL *url;
+@property (strong, nonatomic) NSString *date;
 @property (strong, nonatomic) NSString *host;
 @property (strong, nonatomic) NSArray *imagesURLs;
 @property (assign, nonatomic) NSInteger pagesNumber;

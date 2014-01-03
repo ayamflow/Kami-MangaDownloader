@@ -206,6 +206,9 @@
 				CE0A36B3186DF860001A3088 /* Assets */,
 				CE22FF7B18760E9300789654 /* Core */,
 				CE22FF7D18760EDD00789654 /* Common */,
+				CE0A368B186DF45F001A3088 /* AppDelegate.h */,
+				CE0A368C186DF45F001A3088 /* AppDelegate.m */,
+				CE0A368E186DF45F001A3088 /* MainMenu.xib */,
 				CE0A3691186DF45F001A3088 /* Images.xcassets */,
 				CE0A3680186DF45F001A3088 /* Supporting Files */,
 			);
@@ -305,9 +308,6 @@
 		CE22FF7D18760EDD00789654 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				CE0A368B186DF45F001A3088 /* AppDelegate.h */,
-				CE0A368C186DF45F001A3088 /* AppDelegate.m */,
-				CE0A368E186DF45F001A3088 /* MainMenu.xib */,
 				CE0A36AD186DF735001A3088 /* MasterViewController.h */,
 				CE0A36AE186DF735001A3088 /* MasterViewController.m */,
 				CE0A36AF186DF735001A3088 /* MasterViewController.xib */,

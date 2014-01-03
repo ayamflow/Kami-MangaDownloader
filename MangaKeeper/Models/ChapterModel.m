@@ -16,10 +16,13 @@
 #define kStatusPaused @"Paused"
 #define kStatusCompleted @"Completed"
 #define kStatusFetchingData @"Fetching data"
+#define kStatusReady @"Ready"
+#define kStatusCanceled @"Cancelled"
 
 @interface ChapterModel ()
 
 @property (assign, nonatomic) BOOL isReady;
+@property (assign, nonatomic) BOOL isFetching;
 
 @end
 
@@ -39,6 +42,13 @@
 }
 
 - (void)download {
+    if(self.isReady) {
+        [self dataFetched];
+        return;
+    }
+    if(self.isFetching) return;
+    self.isFetching = YES;
+    
     // Fetch the chapters on a background thread
     NSOperationQueue *queue = [[NSOperationQueue alloc] init];
     NSInvocationOperation *fetchChapterData = [[NSInvocationOperation alloc] initWithTarget:self selector:@selector(fetchData) object:nil];
@@ -57,6 +67,7 @@
 
 - (void)dataFetched {
     self.isReady = YES;
+    self.isFetching = NO;
     NSUserDefaults *userPreferences = [NSUserDefaults standardUserDefaults];
     NSString *downloadDirectory = [userPreferences stringForKey:@"downloadDirectory"];
     NSString *chapterPath = [downloadDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@", self.title]];
@@ -77,13 +88,16 @@
         [self.downloadQueue addOperation:item];
     }
 
-    self.status = kStatusDownloading;
+    self.status = kStatusReady;
 }
 
 #pragma DownloadQueueDelegate
 
 - (void)resume {
-    self.status = kStatusDownloading;
+    if(self.isReady) {
+        self.status = kStatusDownloading;
+    }
+    else self.status = kStatusFetchingData;
 }
 
 - (void)pause {
@@ -94,9 +108,30 @@
     self.status = kStatusCompleted;
 }
 
+- (void)remove {
+    self.status = kStatusCanceled;
+    
+    NSUserDefaults *userPreferences = [NSUserDefaults standardUserDefaults];
+    NSString *downloadDirectory = [userPreferences stringForKey:@"downloadDirectory"];
+    NSString *chapterPath = [downloadDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@", self.title]];
+    
+    BOOL isDir;
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if([fileManager fileExistsAtPath:chapterPath isDirectory:&isDir]) {
+        if(![fileManager removeItemAtPath:chapterPath error:NULL]) {
+            NSLog(@"Error: Folder %@ deletion failed.", chapterPath);
+        }
+    }
+}
+
 - (void)progressDidUpdate:(CGFloat)progressPercent {
     CGFloat onePage = 1.0 / (CGFloat)self.pagesNumber;
     self.downloadQueue.progress = onePage * (self.pagesNumber - self.downloadQueue.operationCount) + progressPercent * onePage;
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"downloadNeedsUpdate" object:nil];
+}
+
+- (void)setStatus:(NSString *)newStatus {
+    status = newStatus;
     [[NSNotificationCenter defaultCenter] postNotificationName:@"downloadNeedsUpdate" object:nil];
 }
 
