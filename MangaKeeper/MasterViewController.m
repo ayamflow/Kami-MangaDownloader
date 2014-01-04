@@ -18,6 +18,9 @@
 #import "DownloadManager.h"
 #import "Statuses.h"
 
+#define kResumeButtonText @"Resume queue"
+#define kPauseButtonText @"Pause queue"
+
 @interface MasterViewController ()
 
 @property (strong, nonatomic) NSArray *chaptersModels;
@@ -105,13 +108,15 @@
     [self hideProgressIndicator];
 }
 
-- (IBAction)resumeDownloadQueue:(id)sender {
-    [self.downloadsListView reloadData];
-    [(DownloadManager *)[DownloadManager sharedInstance] resume];
-}
-
-- (IBAction)pauseDownloadQueue:(id)sender {
-    [(DownloadManager *)[DownloadManager sharedInstance] pause];
+- (IBAction)toggleDownloadQueueStatus:(id)sender { // Pause/Resume
+    if([[DownloadManager sharedInstance] isPaused]) {
+        [(DownloadManager *)[DownloadManager sharedInstance] resume];
+        [(NSButton *)sender setTitle:kPauseButtonText];
+    }
+    else {
+        [(DownloadManager *)[DownloadManager sharedInstance] pause];
+        [(NSButton *)sender setTitle:kResumeButtonText];
+    }
 }
 
 - (IBAction)stopDownloadQueue:(id)sender {
@@ -187,7 +192,7 @@
 #pragma Pending downloads
 
 - (BOOL)hasPendingDownloads {
-    return ![[DownloadManager sharedInstance] isPaused];
+    return [[DownloadManager sharedInstance] isPaused];
 }
 
 @end

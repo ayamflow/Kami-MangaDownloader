@@ -9,8 +9,9 @@
 #import <Foundation/Foundation.h>
 #import "DownloadItem.h"
 #import "ProgressDownloadQueue.h"
+#import "DownloadManagerDelegate.h"
 
-@interface DownloadManager : NSObject
+@interface DownloadManager : NSObject <DownloadManagerDelegate>
 
 @property (strong, nonatomic) NSMutableArray *downloadQueues;
 @property (assign, nonatomic) NSInteger connectionsNumber;
@@ -21,6 +22,5 @@
 - (void)pause;
 - (void)stop;
 - (void)addQueue:(ProgressDownloadQueue *)queue;
-- (void)removeQueue:(ProgressDownloadQueue *)queue;
 
 @end

@@ -19,6 +19,7 @@
 @property (strong, nonatomic) NSArray *imagesURLs;
 @property (assign, nonatomic) NSInteger pagesNumber;
 @property (strong, nonatomic) NSObject<MangaSite> *mangaSite;
+@property (assign, nonatomic) BOOL isReady;
 
 - (void)download;
 - (void)addToDownloadQueue;

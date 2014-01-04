@@ -21,7 +21,6 @@
 
 @interface ChapterModel ()
 
-@property (assign, nonatomic) BOOL isReady;
 @property (assign, nonatomic) BOOL isFetching;
 
 @end
@@ -80,6 +79,7 @@
     }
 
     self.status = kStatusReady;
+    [self.downloadQueue queueIsReady];
 }
 
 #pragma DownloadQueueDelegate

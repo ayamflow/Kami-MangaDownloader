@@ -12,7 +12,7 @@
 
 @interface DownloadManager ()
 
-@property (strong, nonatomic) ProgressDownloadQueue *currentQueue;
+@property (strong, nonatomic) NSMutableArray *activesQueues;
 
 @end
 
@@ -30,7 +30,8 @@
 - (id)init {
     if(self = [super init]) {
         self.downloadQueues = [NSMutableArray array];
-        self.isPaused = YES;
+        self.activesQueues = [NSMutableArray array];
+        _isPaused = NO;
     }
     return self;
 }
@@ -38,77 +39,125 @@
 #pragma Flow control
 
 - (void)resume {
-    for(ProgressDownloadQueue *queue in self.downloadQueues) {
-        [queue.chapter download];
-    }
+    if(!_isPaused || [self.downloadQueues count] == 0) return;
+    _isPaused = NO;
 
-    if(self.currentQueue != nil) {
-        [self.currentQueue setSuspended:NO];
-        [self.currentQueue.chapter resume];
+    for(int i = 0; i < self.connectionsNumber; i++) {
+        ProgressDownloadQueue *queue = [self.downloadQueues objectAtIndex:i];
+        if(queue != nil) {
+            [self resumeQueue:queue];
+        }
     }
-    else if([self.downloadQueues count] > 0) {
-        [self startNextQueue];
-    }
-    
-    self.isPaused = NO;
 }
 
 - (void)pause {
-    if(self.currentQueue == nil) return;
-    [self.currentQueue setSuspended:YES];
-    [self.currentQueue.chapter pause];
-    
-    self.isPaused = YES;
+    if(_isPaused || [self.downloadQueues count] == 0) return;
+    _isPaused = YES;
+
+    for(ProgressDownloadQueue *queue in self.activesQueues) {
+        [self pauseQueue:queue];
+    }
+    [self.activesQueues removeAllObjects];
+
 }
 
 - (void)stop {
-    [self.currentQueue removeObserver:self forKeyPath:@"operations"];
-    self.currentQueue = nil;
+    _isPaused = YES;
+
     for(ProgressDownloadQueue *queue in self.downloadQueues) {
-        [queue cancelAllOperations];
-        [queue.chapter remove];
+        [self stopQueue:queue];
     }
+    [self.activesQueues removeAllObjects];
     [self.downloadQueues removeAllObjects];
-    
-    self.isPaused = YES;
 }
 
 - (void)startNextQueue {
     if([self.downloadQueues count] == 0) return;
-    self.currentQueue = [self.downloadQueues objectAtIndex:0];
+    if([self.activesQueues count] >= self.connectionsNumber) return;
 
-    [self.currentQueue addObserver:self forKeyPath:@"operations" options:0 context:NULL];
-    [self.currentQueue setSuspended:NO];
-    [self.currentQueue.chapter resume];
+    ProgressDownloadQueue *queue = [self.downloadQueues objectAtIndex:[self.activesQueues count]];
+    if(!queue.chapter.isReady) return;
+
+    [self resumeQueue:queue];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    if(object == self.currentQueue && [keyPath isEqualToString:@"operations"]) {
-        [self.currentQueue removeObserver:self forKeyPath:@"operations"];
-        [self.downloadQueues removeObject:self.currentQueue];
-        [self.currentQueue.chapter complete];
-        [self startNextQueue];
+    if([self.activesQueues indexOfObject:object] != NSNotFound && [keyPath isEqualToString:@"operations"]) {
+        ProgressDownloadQueue *queue = (ProgressDownloadQueue *)object;
+        if(queue.operationCount == 0) {
+            [self queueDidFinish:queue];
+        }
     }
+}
+
+#pragma ProgressDownloadQueue methods
+
+- (void)resumeQueue:(ProgressDownloadQueue *)queue {
+    [queue setSuspended:NO];
+    [queue.chapter resume];
+    [queue addObserver:self forKeyPath:@"operations" options:0 context:NULL];
+    [self.activesQueues addObject:queue];
+}
+
+- (void)pauseQueue:(ProgressDownloadQueue *)queue {
+    [queue setSuspended:YES];
+    [queue.chapter pause];
+    @try {
+        [queue removeObserver:self forKeyPath:@"operations"];
+    }
+    @catch (NSException *exception) {
+        // No observer was attached, moving on
+    }
+}
+
+- (void)setIsPaused:(BOOL)isPaused {
+    NSLog(@"setIsPause %@", isPaused ? @"YES" : @"NO");
+    if([self.downloadQueues count] == 0) return;
+
+    if(isPaused) {
+        [self pause];
+    }
+    else {
+        [self resume];
+    }
+}
+
+- (void)stopQueue:(ProgressDownloadQueue *)queue {
+    [self pauseQueue:queue];
+    [queue cancelAllOperations];
+    [queue.chapter remove];
+    queue.delegate = nil;
+}
+
+- (void)queueDidFinish:(ProgressDownloadQueue *)queue {
+    [queue removeObserver:self forKeyPath:@"operations"];
+    [self.activesQueues removeObject:queue];
+//    [self.downloadQueues removeObject:queue];
+    [queue.chapter complete];
+//    [self startNextQueue];
 }
 
 #pragma Add/remove
 
 - (void)addQueue:(ProgressDownloadQueue *)queue {
     if([self.downloadQueues indexOfObject:queue] != NSNotFound) return;
-    [queue.chapter resume];
+    [queue setSuspended:YES];
+    queue.delegate = self;
+    [queue setMaxConcurrentOperationCount:1];
     [self.downloadQueues addObject:queue];
-}
-
-- (void)removeQueue:(ProgressDownloadQueue *)queue {
-    if([self.downloadQueues indexOfObject:queue] == NSNotFound) return;
-    [queue cancelAllOperations];
-    [self.downloadQueues removeObject:queue];
+    [self startNextQueue];
 }
 
 - (void)setConnectionsNumber:(NSInteger)connectionsNumber {
-    for(ProgressDownloadQueue *queue in self.downloadQueues) {
-        queue.maxConcurrentOperationCount = connectionsNumber;
-    }
+    _connectionsNumber = connectionsNumber;
+    [self startNextQueue];
+}
+
+#pragma DownloadManagerDelegate methods
+
+- (void)queueIsReadyToDownload:(ProgressDownloadQueue *)queue {
+    if(self.isPaused) return;
+    [self startNextQueue];
 }
 
 @end

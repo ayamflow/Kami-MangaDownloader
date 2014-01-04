@@ -94,6 +94,7 @@
 		CE0A36AF186DF735001A3088 /* MasterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MasterViewController.xib; sourceTree = "<group>"; };
 		CE1C2E6E1874C8EB00CFF986 /* DownloadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DownloadManager.h; path = DownloadManager/DownloadManager.h; sourceTree = "<group>"; };
 		CE1C2E6F1874C8EB00CFF986 /* DownloadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DownloadManager.m; path = DownloadManager/DownloadManager.m; sourceTree = "<group>"; };
+		CE374BE618787D0B00BDD450 /* DownloadManagerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DownloadManagerDelegate.h; path = DownloadManager/DownloadManagerDelegate.h; sourceTree = "<group>"; };
 		CECB4AC118749D9E00ED5372 /* PreferencesPane.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreferencesPane.xib; sourceTree = "<group>"; };
 		CECB4AC71874A12500ED5372 /* PreferencesPaneWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreferencesPaneWindowController.h; sourceTree = "<group>"; };
 		CECB4AC81874A12500ED5372 /* PreferencesPaneWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreferencesPaneWindowController.m; sourceTree = "<group>"; };
@@ -262,6 +263,7 @@
 				4FE916FA1875D67B006C1482 /* ProgressDownloadQueue.h */,
 				4FE916FB1875D67B006C1482 /* ProgressDownloadQueue.m */,
 				4FE916F61875C9A0006C1482 /* DownloadQueueDelegate.h */,
+				CE374BE618787D0B00BDD450 /* DownloadManagerDelegate.h */,
 			);
 			name = DownloadManager;
 			sourceTree = "<group>";

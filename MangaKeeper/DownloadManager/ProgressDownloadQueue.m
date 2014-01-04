@@ -10,4 +10,8 @@
 
 @implementation ProgressDownloadQueue
 
+- (void)queueIsReady {
+    [self.delegate queueIsReadyToDownload:self];
+}
+
 @end
