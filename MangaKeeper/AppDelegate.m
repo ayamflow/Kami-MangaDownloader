@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "MasterViewController.h"
 #import "PreferencesPaneWindowController.h"
+#import "DownloadManager.h"
 
 @interface AppDelegate ()
 
@@ -21,17 +22,10 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    // Check that the downloadDirectory preference exists, or defaults to Documents directory.
-    NSUserDefaults *userPreferences = [NSUserDefaults standardUserDefaults];
-    NSString *downloadDirectory = [userPreferences stringForKey:@"downloadDirectory"];
-    if(downloadDirectory == nil) {
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString *documentsDirectory = [paths objectAtIndex:0];
-        [userPreferences setObject:documentsDirectory forKey:@"downloadDirectory"];
-    }
+    [self checkIfApplicationSUpportFolderExists];
+    [self checkIfPreferencesAreSet];
 
     self.masterViewController = [[MasterViewController alloc] initWithNibName:@"MasterViewController" bundle:nil];
-
     [self.window.contentView addSubview:self.masterViewController.view];
     self.masterViewController.view.frame = ((NSView *)self.window.contentView).bounds;
 }
@@ -39,7 +33,7 @@
 #pragma Exit application
 
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender {
-    if([self.masterViewController hasPendingDownloads]) {
+    if([[DownloadManager sharedInstance] hasPendingDownloads]) {
         NSAlert *closeAlert = [[NSAlert alloc] init];
         [closeAlert setMessageText:@"You have active downloads."];
         [closeAlert setInformativeText:@"All active downloads will be lost. Exit anyway ?"];
@@ -66,6 +60,32 @@
 - (IBAction)openPreferencesPane:(id)sender {
     self.preferencesPane = [[PreferencesPaneWindowController alloc] initWithWindowNibName:@"PreferencesPane"];
     [self.preferencesPane showWindow:nil];
+}
+
+- (void)checkIfPreferencesAreSet {
+    // Check that the downloadDirectory preference exists, or defaults to Documents directory.
+    NSUserDefaults *userPreferences = [NSUserDefaults standardUserDefaults];
+    NSString *downloadDirectory = [userPreferences stringForKey:@"downloadDirectory"];
+    if(downloadDirectory == nil) {
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *documentsDirectory = [paths objectAtIndex:0];
+        [userPreferences setObject:documentsDirectory forKey:@"downloadDirectory"];
+    }
+}
+
+#pragma Application support directory
+
+- (void)checkIfApplicationSUpportFolderExists {
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
+    NSString *kamiFolderPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"Kami"];
+
+    BOOL isDir;
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if(![fileManager fileExistsAtPath:kamiFolderPath isDirectory:&isDir]) {
+        if(![fileManager createDirectoryAtPath:kamiFolderPath withIntermediateDirectories:YES attributes:nil error:NULL]) {
+            NSLog(@"Error: Create folder failed %@", kamiFolderPath);
+        }
+    }
 }
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "DownloadItem.h"
+#import "NotificationManager.h"
 
 @interface DownloadItem ()
 
@@ -46,8 +47,7 @@
     [self willChangeValueForKey:@"isExecuting"];
     self.executing = YES;
     [self didChangeValueForKey:@"isExecuting"];
-    
-//    NSLog(@"Starting to download %@", self.url);
+
     self.progress = 0;
 
     NSURLRequest *request = [NSURLRequest requestWithURL:self.url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:60];
@@ -119,8 +119,8 @@
         [self done];
         return;
     }
-    
-    NSLog(@"Download failed with error %@", error);
+
+    [[NotificationManager sharedInstance] showDownloadFailedNotificationWithDetails:[self.fileName stringByReplacingOccurrencesOfString:self.directory withString:@""]];
 }
 
 - (NSCachedURLResponse *)connection:(NSURLConnection *)connection willCacheResponse:(NSCachedURLResponse *)cachedResponse {

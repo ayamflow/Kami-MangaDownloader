@@ -9,7 +9,7 @@
 #import "BookmarksManager.h"
 #import "BookmarkModel.h"
 
-#define kSavePath @"Bookmarks.plist"
+#define kSavePath @"KamiBookmarks.plist"
 
 @interface BookmarksManager ()
 
@@ -75,8 +75,8 @@
 }
 
 - (NSString *)getSavePlistPath {
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    return [[paths objectAtIndex:0] stringByAppendingPathComponent:kSavePath];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
+    return [[[paths objectAtIndex:0] stringByAppendingPathComponent:@"Kami"] stringByAppendingPathComponent:kSavePath];
 }
 
 - (void)deleteBookmarks {

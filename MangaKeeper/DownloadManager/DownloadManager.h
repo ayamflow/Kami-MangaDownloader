@@ -15,12 +15,14 @@
 
 @property (strong, nonatomic) NSMutableArray *downloadQueues;
 @property (assign, nonatomic) NSInteger connectionsNumber;
-@property (assign, nonatomic) BOOL isPaused;
 
 + (id)sharedInstance;
 - (void)resume;
 - (void)pause;
 - (void)stop;
 - (void)addQueue:(ProgressDownloadQueue *)queue;
+- (void)stopQueue:(ProgressDownloadQueue *)queue;
+- (void)removeQueue:(ProgressDownloadQueue *)queue;
+- (BOOL)hasPendingDownloads;
 
 @end

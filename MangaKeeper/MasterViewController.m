@@ -123,6 +123,15 @@
     [(DownloadManager *)[DownloadManager sharedInstance] stop];
 }
 
+- (IBAction)stopSelectedDownload:(id)sender {
+    NSIndexSet *selectedDownloadsIndexes = [self.downloadsListView selectedRowIndexes];
+    [selectedDownloadsIndexes enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop) {
+        ProgressDownloadQueue *queue = [[[DownloadManager sharedInstance] downloadQueues] objectAtIndex:index];
+        [[DownloadManager sharedInstance] stopQueue:queue];
+        [[DownloadManager sharedInstance] removeQueue:queue];
+    }];
+}
+
 #pragma Connections number Management
 - (IBAction)connectionsNumberUpdated:(id)sender {
     self.connectionsNumber = MAX(0, MIN(10, self.connectionsNumber));
@@ -187,12 +196,6 @@
 - (void)hideProgressIndicator {
     [self.progressIndicator setHidden:YES];
     [self.progressIndicator stopAnimation:nil];
-}
-
-#pragma Pending downloads
-
-- (BOOL)hasPendingDownloads {
-    return [[DownloadManager sharedInstance] isPaused];
 }
 
 @end

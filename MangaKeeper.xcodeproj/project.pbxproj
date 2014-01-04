@@ -31,6 +31,7 @@
 		CE0A36B0186DF735001A3088 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE0A36AE186DF735001A3088 /* MasterViewController.m */; };
 		CE0A36B1186DF735001A3088 /* MasterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE0A36AF186DF735001A3088 /* MasterViewController.xib */; };
 		CE1C2E701874C8EB00CFF986 /* DownloadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1C2E6F1874C8EB00CFF986 /* DownloadManager.m */; };
+		CE374BEB187890C500BDD450 /* NotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CE374BEA187890C500BDD450 /* NotificationManager.m */; };
 		CECB4AC218749D9E00ED5372 /* PreferencesPane.xib in Resources */ = {isa = PBXBuildFile; fileRef = CECB4AC118749D9E00ED5372 /* PreferencesPane.xib */; };
 		CECB4AC91874A12500ED5372 /* PreferencesPaneWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = CECB4AC81874A12500ED5372 /* PreferencesPaneWindowController.m */; };
 		CEDE0A0F18760C610089BCF8 /* DownloadsTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEDE0A0E18760C610089BCF8 /* DownloadsTableView.m */; };
@@ -95,6 +96,8 @@
 		CE1C2E6E1874C8EB00CFF986 /* DownloadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DownloadManager.h; path = DownloadManager/DownloadManager.h; sourceTree = "<group>"; };
 		CE1C2E6F1874C8EB00CFF986 /* DownloadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DownloadManager.m; path = DownloadManager/DownloadManager.m; sourceTree = "<group>"; };
 		CE374BE618787D0B00BDD450 /* DownloadManagerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DownloadManagerDelegate.h; path = DownloadManager/DownloadManagerDelegate.h; sourceTree = "<group>"; };
+		CE374BE9187890C500BDD450 /* NotificationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NotificationManager.h; path = NotificationManager/NotificationManager.h; sourceTree = "<group>"; };
+		CE374BEA187890C500BDD450 /* NotificationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NotificationManager.m; path = NotificationManager/NotificationManager.m; sourceTree = "<group>"; };
 		CECB4AC118749D9E00ED5372 /* PreferencesPane.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreferencesPane.xib; sourceTree = "<group>"; };
 		CECB4AC71874A12500ED5372 /* PreferencesPaneWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreferencesPaneWindowController.h; sourceTree = "<group>"; };
 		CECB4AC81874A12500ED5372 /* PreferencesPaneWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreferencesPaneWindowController.m; sourceTree = "<group>"; };
@@ -289,6 +292,7 @@
 		CE22FF7B18760E9300789654 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				CE374BE8187890AF00BDD450 /* NotificationManager */,
 				CEDE0A09187609710089BCF8 /* Constants */,
 				CEEAF5DC18702F5E000E1500 /* Models */,
 				4F78BD6A1871EE0A009F16A4 /* SitesHelpers */,
@@ -316,6 +320,15 @@
 				CE22FF7C18760EBB00789654 /* DownloadsTableView */,
 			);
 			name = Common;
+			sourceTree = "<group>";
+		};
+		CE374BE8187890AF00BDD450 /* NotificationManager */ = {
+			isa = PBXGroup;
+			children = (
+				CE374BE9187890C500BDD450 /* NotificationManager.h */,
+				CE374BEA187890C500BDD450 /* NotificationManager.m */,
+			);
+			name = NotificationManager;
 			sourceTree = "<group>";
 		};
 		CECB4AC618749F3D00ED5372 /* PreferencesPane */ = {
@@ -457,6 +470,7 @@
 				CEEAF5E218702FA0000E1500 /* BookmarksManager.m in Sources */,
 				4F1251EA1873148800F13250 /* DownloadItem.m in Sources */,
 				CEDE0A0F18760C610089BCF8 /* DownloadsTableView.m in Sources */,
+				CE374BEB187890C500BDD450 /* NotificationManager.m in Sources */,
 				4F81C56A18718E5400715DA8 /* XPathQuery.m in Sources */,
 				4FE916FC1875D67B006C1482 /* ProgressDownloadQueue.m in Sources */,
 				4F78BD6E1871EE47009F16A4 /* MangaReader.m in Sources */,

@@ -9,10 +9,12 @@
 #import "DownloadManager.h"
 #import "DownloadItem.h"
 #import "ProgressDownloadQueue.h"
+#import "NotificationManager.h"
 
 @interface DownloadManager ()
 
 @property (strong, nonatomic) NSMutableArray *activesQueues;
+@property (assign, nonatomic) BOOL isPaused;
 
 @end
 
@@ -110,18 +112,6 @@
     }
 }
 
-- (void)setIsPaused:(BOOL)isPaused {
-    NSLog(@"setIsPause %@", isPaused ? @"YES" : @"NO");
-    if([self.downloadQueues count] == 0) return;
-
-    if(isPaused) {
-        [self pause];
-    }
-    else {
-        [self resume];
-    }
-}
-
 - (void)stopQueue:(ProgressDownloadQueue *)queue {
     [self pauseQueue:queue];
     [queue cancelAllOperations];
@@ -129,12 +119,22 @@
     queue.delegate = nil;
 }
 
+- (void)removeQueue:(ProgressDownloadQueue *)queue {
+    if([self.downloadQueues indexOfObject:queue] == NSNotFound) return;
+    if([self.activesQueues indexOfObject:queue] != NSNotFound) {
+        [self.activesQueues removeObject:queue];
+    }
+    [self.downloadQueues removeObject:queue];
+    [self startNextQueue];
+}
+
 - (void)queueDidFinish:(ProgressDownloadQueue *)queue {
     [queue removeObserver:self forKeyPath:@"operations"];
     [self.activesQueues removeObject:queue];
-//    [self.downloadQueues removeObject:queue];
     [queue.chapter complete];
-//    [self startNextQueue];
+    [self.downloadQueues removeObject:queue];
+    [[NotificationManager sharedInstance] showDownloadCompleteNotificationWithDetails:queue.chapter.title];
+    [self startNextQueue];
 }
 
 #pragma Add/remove
@@ -158,6 +158,12 @@
 - (void)queueIsReadyToDownload:(ProgressDownloadQueue *)queue {
     if(self.isPaused) return;
     [self startNextQueue];
+}
+
+#pragma Pending downloads
+
+- (BOOL)hasPendingDownloads {
+    return [self.downloadQueues count] > 0;
 }
 
 @end

@@ -49,6 +49,7 @@
 
 #pragma delegate
 
+// Show a progressbar (NSProgressIndicator) instead of a NSString percentage
 /*- (void)tableView:(NSTableView *)tableView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
     if([tableColumn.identifier isEqualToString:@"progressCell"]) {
         CGFloat progress = [[[[DownloadManager sharedInstance] downloadQueues] objectAtIndex:row] progress];
