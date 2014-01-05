@@ -9,7 +9,5 @@
 #import <Cocoa/Cocoa.h>
 
 @interface PreferencesPaneWindowController : NSWindowController
-@property (weak) IBOutlet NSButton *browseButton;
-@property (weak) IBOutlet NSTextField *downloadDirectoryLabel;
 
 @end

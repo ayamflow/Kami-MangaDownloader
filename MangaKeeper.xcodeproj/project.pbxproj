@@ -36,6 +36,7 @@
 		CEA31E841879DD07004BAEFA /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = CEA31E831879DD07004BAEFA /* dsa_pub.pem */; };
 		CEA983901879E1B100EB1D00 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE6AB5A21879E14C0025F3DF /* Sparkle.framework */; };
 		CEA983941879E55A00EB1D00 /* Icons.icns in Resources */ = {isa = PBXBuildFile; fileRef = CEA983931879E55A00EB1D00 /* Icons.icns */; };
+		CEA983971879F6F100EB1D00 /* MangaFox.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA983961879F6F100EB1D00 /* MangaFox.m */; };
 		CECB4AC218749D9E00ED5372 /* PreferencesPane.xib in Resources */ = {isa = PBXBuildFile; fileRef = CECB4AC118749D9E00ED5372 /* PreferencesPane.xib */; };
 		CECB4AC91874A12500ED5372 /* PreferencesPaneWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = CECB4AC81874A12500ED5372 /* PreferencesPaneWindowController.m */; };
 		CEDE0A0F18760C610089BCF8 /* DownloadsTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEDE0A0E18760C610089BCF8 /* DownloadsTableView.m */; };
@@ -118,6 +119,8 @@
 		CE6AB5A21879E14C0025F3DF /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		CEA31E831879DD07004BAEFA /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = dsa_pub.pem; path = Resources/dsa_pub.pem; sourceTree = "<group>"; };
 		CEA983931879E55A00EB1D00 /* Icons.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icons.icns; sourceTree = "<group>"; };
+		CEA983951879F6F100EB1D00 /* MangaFox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MangaFox.h; path = Sites/MangaFox.h; sourceTree = "<group>"; };
+		CEA983961879F6F100EB1D00 /* MangaFox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MangaFox.m; path = Sites/MangaFox.m; sourceTree = "<group>"; };
 		CECB4AC118749D9E00ED5372 /* PreferencesPane.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreferencesPane.xib; sourceTree = "<group>"; };
 		CECB4AC71874A12500ED5372 /* PreferencesPaneWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreferencesPaneWindowController.h; sourceTree = "<group>"; };
 		CECB4AC81874A12500ED5372 /* PreferencesPaneWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreferencesPaneWindowController.m; sourceTree = "<group>"; };
@@ -158,6 +161,7 @@
 			children = (
 				4F78BD6F1871EE4B009F16A4 /* MangaReader */,
 				4F78BD701871EE98009F16A4 /* MangaSite.h */,
+				CEA983981879F6F400EB1D00 /* MangaFox */,
 			);
 			name = SitesHelpers;
 			sourceTree = "<group>";
@@ -355,6 +359,15 @@
 			name = NotificationManager;
 			sourceTree = "<group>";
 		};
+		CEA983981879F6F400EB1D00 /* MangaFox */ = {
+			isa = PBXGroup;
+			children = (
+				CEA983951879F6F100EB1D00 /* MangaFox.h */,
+				CEA983961879F6F100EB1D00 /* MangaFox.m */,
+			);
+			name = MangaFox;
+			sourceTree = "<group>";
+		};
 		CECB4AC618749F3D00ED5372 /* PreferencesPane */ = {
 			isa = PBXGroup;
 			children = (
@@ -507,6 +520,7 @@
 				CEEAF5DF18702F72000E1500 /* BookmarkModel.m in Sources */,
 				CE0A36B0186DF735001A3088 /* MasterViewController.m in Sources */,
 				4F81C56918718E5400715DA8 /* TFHppleElement.m in Sources */,
+				CEA983971879F6F100EB1D00 /* MangaFox.m in Sources */,
 				CE0A3686186DF45F001A3088 /* main.m in Sources */,
 				4F81C56818718E5400715DA8 /* TFHpple.m in Sources */,
 			);

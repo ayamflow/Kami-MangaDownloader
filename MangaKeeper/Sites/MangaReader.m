@@ -50,7 +50,7 @@
         }
     }
 
-    return chaptersList;
+    return [[chaptersList reverseObjectEnumerator] allObjects];
 }
 
 - (NSInteger)getPagesNumberForChapter:(ChapterModel *)chapter {

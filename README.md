@@ -4,7 +4,7 @@ Kami - Manga Downloader for Mac OS X
 Kami is a Mac OS X application intended to ease the search & download of manga chapters.
 
 ## Features
-* Fetch list of chapters for the queried manga on MangaReader.net
+* Fetch list of chapters for the queried manga on MangaReader.net or MangaFox.me
 * Download multiple chapters
 * Integration with OS X notification center
 * Pause/Resume download in-app (progress currently not saved if the app is quitted)
@@ -21,6 +21,8 @@ Kami is a Mac OS X application intended to ease the search & download of manga c
 * Github page or "official" site with download link
 
 ## Changelog
+* v0.2.0 : Added MangaFox.me support
+* v0.1.1 : Auto-update
 * v0.1.0 : First working version, only compatible with MangaReader.net for now.
 
 ## Acknowledgement

@@ -10,6 +10,10 @@
 
 @interface PreferencesPaneWindowController ()
 
+@property (strong, nonatomic) NSString *downloadDirectory;
+@property (assign, nonatomic) BOOL autoCheckUpdates;
+@property (assign, nonatomic) NSUInteger autoCheckFrequency;
+
 @end
 
 @implementation PreferencesPaneWindowController
@@ -18,17 +22,10 @@
 {
     self = [super initWithWindow:window];
     if (self) {
-        // Initialization code here.
+        NSUserDefaults *userPreferences = [NSUserDefaults standardUserDefaults];
+        self.downloadDirectory = [userPreferences stringForKey:@"downloadDirectory"];
     }
     return self;
-}
-
-- (void)windowDidLoad
-{
-    [super windowDidLoad];
-
-    NSUserDefaults *userPreferences = [NSUserDefaults standardUserDefaults];
-    self.downloadDirectoryLabel.stringValue = [userPreferences stringForKey:@"downloadDirectory"];
 }
 
 - (IBAction)browseDownloadDirectory:(id)sender {
@@ -41,9 +38,24 @@
     fileBrowser.allowsMultipleSelection = NO;
     [fileBrowser runModal];
 
-    NSUserDefaults *userPreferences = [NSUserDefaults standardUserDefaults];
-    [userPreferences setObject:[[fileBrowser directoryURL] path] forKey:@"downloadDirectory"];
-    self.downloadDirectoryLabel.stringValue = [userPreferences stringForKey:@"downloadDirectory"];
+    self.downloadDirectory = [[fileBrowser directoryURL] path];
 }
+
+#pragma Save/cancel
+
+- (IBAction)cancelChanges:(id)sender {
+    // Reset pref
+    // Reset downloadDirectory (easy)
+    // Reset updates pref (dunno)
+    [self close];
+}
+
+- (IBAction)saveChanges:(id)sender {
+    // Save everything
+    NSUserDefaults *userPreferences = [NSUserDefaults standardUserDefaults];
+    [userPreferences setObject:self.downloadDirectory forKey:@"downloadDirectory"];
+    [self close];
+}
+
 
 @end

@@ -73,17 +73,17 @@
                         </items>
                     </menu>
                 </menuItem>
-                <menuItem title="File" id="19">
-                    <menu key="submenu" title="File" systemMenu="window" id="24">
+                <menuItem title="Edit" id="19">
+                    <menu key="submenu" title="Edit" systemMenu="window" id="24">
                         <items>
                             <menuItem title="Cut" keyEquivalent="x" id="23">
                                 <connections>
-                                    <action selector="performMiniaturize:" target="-1" id="37"/>
+                                    <action selector="cut:" target="-1" id="ga4-je-EjI"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Copy" keyEquivalent="c" id="239">
                                 <connections>
-                                    <action selector="performZoom:" target="-1" id="240"/>
+                                    <action selector="copy:" target="-1" id="UxN-jS-R4U"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Paste" keyEquivalent="v" id="5">
@@ -92,7 +92,11 @@
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="nMQ-QB-GTQ"/>
-                            <menuItem title="Select all" keyEquivalent="a" id="SGV-mn-3pW"/>
+                            <menuItem title="Select all" keyEquivalent="a" id="SGV-mn-3pW">
+                                <connections>
+                                    <action selector="selectAll:" target="-1" id="u0L-qC-Sbr"/>
+                                </connections>
+                            </menuItem>
                         </items>
                     </menu>
                 </menuItem>

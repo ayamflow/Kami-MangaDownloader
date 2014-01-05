@@ -15,6 +15,7 @@
 #import "MangaSite.h"
 #import "SearchModel.h"
 #import "MangaReader.h"
+#import "MangaFox.h"
 #import "DownloadManager.h"
 #import "Statuses.h"
 
@@ -57,6 +58,9 @@
     
     if([search.host isEqualToString:@"mangareader.net"]) {
         self.currentMangaSite = [[MangaReader alloc] initWithSearch:search];
+    }
+    else if([search.host isEqualToString:@"mangafox.me"]) {
+        self.currentMangaSite = [[MangaFox alloc] initWithSearch:search];
     }
 
     // Fetch the chapters on a background thread
