@@ -67,25 +67,48 @@
                         </items>
                     </menu>
                 </menuItem>
-                <menuItem title="Window" id="19">
-                    <menu key="submenu" title="Window" systemMenu="window" id="24">
+                <menuItem title="File" id="19">
+                    <menu key="submenu" title="File" systemMenu="window" id="24">
                         <items>
-                            <menuItem title="Minimize" keyEquivalent="m" id="23">
+                            <menuItem title="Cut" keyEquivalent="x" id="23">
                                 <connections>
                                     <action selector="performMiniaturize:" target="-1" id="37"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Zoom" id="239">
+                            <menuItem title="Copy" keyEquivalent="c" id="239">
                                 <connections>
                                     <action selector="performZoom:" target="-1" id="240"/>
                                 </connections>
                             </menuItem>
-                            <menuItem isSeparatorItem="YES" id="92">
+                            <menuItem title="Paste" keyEquivalent="v" id="5">
+                                <connections>
+                                    <action selector="paste:" target="-1" id="fA9-y0-b4a"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="nMQ-QB-GTQ"/>
+                            <menuItem title="Select all" keyEquivalent="a" id="SGV-mn-3pW"/>
+                        </items>
+                    </menu>
+                </menuItem>
+                <menuItem title="Window" id="hpH-Dc-klf">
+                    <menu key="submenu" title="Window" systemMenu="window" id="rBu-fe-jcz">
+                        <items>
+                            <menuItem title="Minimize" keyEquivalent="m" id="9Su-nu-oFZ">
+                                <connections>
+                                    <action selector="performMiniaturize:" target="-1" id="ImJ-xA-iEz"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Zoom" id="HKk-BL-Xtb">
+                                <connections>
+                                    <action selector="performZoom:" target="-1" id="EhE-iS-9pI"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="kYE-z0-b8I">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
-                            <menuItem title="Bring All to Front" id="5">
+                            <menuItem title="Bring All to Front" id="5Ao-Ht-3pm">
                                 <connections>
-                                    <action selector="arrangeInFront:" target="-1" id="39"/>
+                                    <action selector="arrangeInFront:" target="-1" id="65F-a6-fLG"/>
                                 </connections>
                             </menuItem>
                         </items>
@@ -109,7 +132,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="335" y="390" width="805" height="325"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1028"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="878"/>
             <view key="contentView" id="372">
                 <rect key="frame" x="0.0" y="0.0" width="805" height="325"/>
                 <autoresizingMask key="autoresizingMask"/>

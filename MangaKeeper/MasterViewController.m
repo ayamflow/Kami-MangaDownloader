@@ -45,7 +45,7 @@
 - (IBAction)parseURL:(id)sender {
     [self showProgressIndicator];
     
-    NSString *url = [self.urlInput stringValue];
+    NSString *url = [[self.urlInput stringValue] stringByReplacingOccurrencesOfString:@"www." withString:@""];
     if(![url contains:@"http://"]) {
         url = [NSString stringWithFormat:@"http://%@", url];
     }
