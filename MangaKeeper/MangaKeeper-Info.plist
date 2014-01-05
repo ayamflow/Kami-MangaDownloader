@@ -31,7 +31,7 @@
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
 	<key>SUFeedURL</key>
-	<string>https://raw.github.com/ayamflow/Kami-MangaDownloader/master/MangaKeeper/Resources/KamiAppcast.xml</string>
+	<string>https://raw.github.com/ayamflow/Kami-MangaDownloader/master/KamiAppcast.xml</string>
 	<key>SUPublicDSAKeyFile</key>
 	<string>dsa_pub.pem</string>
 </dict>
