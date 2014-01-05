@@ -7,9 +7,20 @@
       <language>en</language>
       <item>
         <title>Version 0.1.1 (Mangareader.net only, auto-update feature)</title>
-        <sparkle:releaseNotesLink>https://github.com/ayamflow/Kami-MangaDownloader/releases/tag/0.1.1</sparkle:releaseNotesLink>
-       <pubDate>Sun, 05 Jan 2014 19:54:11 +0000</pubDate>
-       <enclosure url="https://raw.github.com/ayamflow/Kami-MangaDownloader/master/Kami.zip" sparkle:shortVersionString="0.1.1" sparkle:version="1.0" length="513112" type="application/octet-stream" sparkle:dsaSignature="MC0CFQCLAlG5G1QWX7UGy7dUJhtSBQn4LQIUbdoAWiCRJnPGouCAekQyx8hAJx0=" />
-   </item>
+        <description><![CDATA[
+            <h2>Version 0.1.1 Features</h2>
+            <ul>
+                <li>Fetch list of chapters for the queried manga on MangaReader.net<li>
+                <li>Download multiple chapters</li>
+                <li>Integration with OS X notification center</li>
+                <li>Pause/Resume download in-app (progress currently not saved if the app is quitted)</li>
+                <li>Basic bookmarks management (save/delete URL of a specific manga)</li>
+                <li>Check and download update in app thanks to Sparkle</li>
+            </ul>
+            ]]>
+        </description>
+        <pubDate>Sun, 05 Jan 2014 19:54:11 +0000</pubDate>
+        <enclosure url="https://raw.github.com/ayamflow/Kami-MangaDownloader/master/Kami.zip" sparkle:shortVersionString="0.1.1" sparkle:version="1.0" length="513112" type="application/octet-stream" sparkle:dsaSignature="MC0CFQCLAlG5G1QWX7UGy7dUJhtSBQn4LQIUbdoAWiCRJnPGouCAekQyx8hAJx0=" />
+    </item>
 </channel>
 </rss>
