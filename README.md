@@ -1,4 +1,4 @@
-Kami - Manga Download for Mac OS X
+Kami - Manga Downloader for Mac OS X
 ==================================
 
 Kami is a Mac OS X application intended to ease the search & download of manga chapters.
@@ -28,7 +28,7 @@ Kami (which, by the way, means "Paper" but also "God" in japanese) was intended 
 
 ## Buglist
 
-Please fill an [issue](https://github.com/ayamflow/Kami-MangaDownloader/issues).
+Found a bug ? Please fill an [issue](https://github.com/ayamflow/Kami-MangaDownloader/issues).
 
 ## Contributing & Wishlist
 

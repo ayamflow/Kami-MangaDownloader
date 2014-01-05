@@ -31,6 +31,12 @@
                                     <action selector="openPreferencesPane:" target="494" id="6HQ-tZ-NZB"/>
                                 </connections>
                             </menuItem>
+                            <menuItem title="Check for updates..." id="2df-EU-2xx">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="checkForUpdates:" target="VaI-RS-Rc0" id="e6X-gb-HDc"/>
+                                </connections>
+                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="143">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
@@ -129,7 +135,8 @@
             </items>
         </menu>
         <window title="MangaKeeper" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" id="371">
-            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+            <windowCollectionBehavior key="collectionBehavior" fullScreenPrimary="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="335" y="390" width="805" height="325"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1440" height="878"/>
@@ -144,5 +151,6 @@
             </connections>
         </customObject>
         <customObject id="420" customClass="NSFontManager"/>
+        <customObject id="VaI-RS-Rc0" customClass="SUUpdater"/>
     </objects>
 </document>
