@@ -9,7 +9,7 @@
         <title>Version 0.1.1 (Mangareader.net only, auto-update feature)</title>
         <sparkle:releaseNotesLink></sparkle:releaseNotesLink>
        <pubDate>Sun, 05 Jan 2014 19:54:11 +0000</pubDate>
-       <enclosure url="https://raw.github.com/ayamflow/Kami-MangaDownloader/master/Kami.zip" sparkle:version="0.1.1" length="513112" type="application/octet-stream" sparkle:dsaSignature="MC0CFQCLAlG5G1QWX7UGy7dUJhtSBQn4LQIUbdoAWiCRJnPGouCAekQyx8hAJx0=" />
+       <enclosure url="https://raw.github.com/ayamflow/Kami-MangaDownloader/master/Kami.zip" sparkle:shortVersionString="0.1.1" sparkle:version="1.0" length="513112" type="application/octet-stream" sparkle:dsaSignature="MC0CFQCLAlG5G1QWX7UGy7dUJhtSBQn4LQIUbdoAWiCRJnPGouCAekQyx8hAJx0=" />
    </item>
 </channel>
 </rss>
