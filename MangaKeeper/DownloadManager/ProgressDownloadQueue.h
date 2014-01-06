@@ -14,7 +14,8 @@
 
 @property (strong, nonatomic) NSString *title;
 @property (assign, nonatomic) CGFloat progress;
-@property (weak, nonatomic) ChapterModel *chapter;
+@property (strong, nonatomic) ChapterModel *chapter;
+@property (assign, nonatomic) BOOL isCompleted;
 @property (weak, nonatomic) id<DownloadManagerDelegate> delegate;
 
 - (void)queueIsReady;

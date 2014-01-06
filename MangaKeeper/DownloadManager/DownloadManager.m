@@ -46,7 +46,7 @@
 
     for(int i = 0; i < self.connectionsNumber; i++) {
         ProgressDownloadQueue *queue = [self.downloadQueues objectAtIndex:i];
-        if(queue != nil) {
+        if(queue != nil && !queue.isCompleted) {
             [self resumeQueue:queue];
         }
     }
@@ -57,7 +57,9 @@
     _isPaused = YES;
 
     for(ProgressDownloadQueue *queue in self.activesQueues) {
-        [self pauseQueue:queue];
+        if(!queue.isCompleted) {
+            [self pauseQueue:queue];
+        }
     }
     [self.activesQueues removeAllObjects];
 
@@ -67,7 +69,9 @@
     _isPaused = YES;
 
     for(ProgressDownloadQueue *queue in self.downloadQueues) {
-        [self stopQueue:queue];
+        if(!queue.isCompleted) {
+            [self stopQueue:queue];
+        }
     }
     [self.activesQueues removeAllObjects];
     [self.downloadQueues removeAllObjects];
@@ -77,8 +81,13 @@
     if([self.downloadQueues count] == 0) return;
     if([self.activesQueues count] >= self.connectionsNumber) return;
 
-    ProgressDownloadQueue *queue = [self.downloadQueues objectAtIndex:[self.activesQueues count]];
-    if(!queue.chapter.isReady) return;
+    NSInteger index = [self.activesQueues count];
+    ProgressDownloadQueue *queue;
+    do {
+         queue = [self.downloadQueues objectAtIndex:index++];
+    }
+    while(index < [self.downloadQueues count] && (!queue.chapter.isReady || queue.isCompleted));
+    if(!queue.chapter.isReady || queue.isCompleted) return;
 
     [self resumeQueue:queue];
 }
@@ -95,9 +104,9 @@
 #pragma ProgressDownloadQueue methods
 
 - (void)resumeQueue:(ProgressDownloadQueue *)queue {
-    [queue setSuspended:NO];
     [queue.chapter resume];
     [queue addObserver:self forKeyPath:@"operations" options:0 context:NULL];
+    [queue setSuspended:NO];
     [self.activesQueues addObject:queue];
 }
 
@@ -132,7 +141,8 @@
     [queue removeObserver:self forKeyPath:@"operations"];
     [self.activesQueues removeObject:queue];
     [queue.chapter complete];
-    [self.downloadQueues removeObject:queue];
+//    [self.downloadQueues removeObject:queue];
+    queue.isCompleted = YES;
     [[NotificationManager sharedInstance] showDownloadCompleteNotificationWithDetails:queue.chapter.title];
     [self startNextQueue];
 }

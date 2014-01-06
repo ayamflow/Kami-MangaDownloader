@@ -22,6 +22,9 @@
 }
 
 - (void)updateDownloadsList {
+    if(![NSThread isMainThread]) {
+        [self performSelectorOnMainThread:@selector(updateDownloadsList) withObject:Nil waitUntilDone:YES];
+    }
     [self reloadData];
 }
 

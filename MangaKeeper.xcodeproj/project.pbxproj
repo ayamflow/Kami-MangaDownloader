@@ -210,8 +210,8 @@
 		CE0A3678186DF45F001A3088 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				CE6AB5A21879E14C0025F3DF /* Sparkle.framework */,
 				4F81C56B18718ECD00715DA8 /* libxml2.dylib */,
+				CE6AB5A21879E14C0025F3DF /* Sparkle.framework */,
 				CE0A3679186DF45F001A3088 /* Cocoa.framework */,
 				CE0A3698186DF45F001A3088 /* XCTest.framework */,
 				CE0A367B186DF45F001A3088 /* Other Frameworks */,
