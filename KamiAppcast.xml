@@ -5,6 +5,19 @@
       <link>https://raw.github.com/ayamflow/Kami-MangaDownloader/master/KamiAppcast.xml</link>
       <description>Most recent changes with links to updates.</description>
       <language>en</language>
+        <item>
+          <title>Version 0.2.0 Compatible with MangaFox.me</title>
+          <description><![CDATA[
+              <h3>Version 0.2.0</h3>
+              <h4>Features</h4>
+              <ul>
+                <li>You can now download manga from MangaFox.me !</li>
+              </ul>
+              ]]>
+          </description>
+          <pubDate>Mon, 06 Jan 2014 19:34:00 +0000</pubDate>
+          <enclosure url="https://raw.github.com/ayamflow/Kami-MangaDownloader/master/Kami.zip" sparkle:shortVersionString="0.2.0" sparkle:version="1.0" length="513112" type="application/octet-stream" sparkle:dsaSignature="MC0CFQCF/kX+Ew9copnbETH6P0nPyIrZzwIUHW6xsOg697z36JWhmdJ3ZcMpoPE=" />
+      </item>
       <item>
         <title>Version 0.1.1 (Mangareader.net only, auto-update feature)</title>
         <description><![CDATA[
