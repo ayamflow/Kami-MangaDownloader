@@ -1,14 +1,14 @@
 //
-//  PreferencesPaneWindowController.m
+//  SettingsView.m
 //  MangaKeeper
 //
-//  Created by Florian Morel on 01/01/14.
+//  Created by Florian Morel on 11/01/14.
 //  Copyright (c) 2014 Florian Morel. All rights reserved.
 //
 
-#import "PreferencesPaneWindowController.h"
+#import "PreferencesPane.h"
 
-@interface PreferencesPaneWindowController ()
+@interface PreferencesPane ()
 
 @property (strong, nonatomic) NSString *downloadDirectory;
 @property (assign, nonatomic) BOOL autoCheckUpdates;
@@ -16,11 +16,11 @@
 
 @end
 
-@implementation PreferencesPaneWindowController
+@implementation PreferencesPane
 
-- (id)initWithWindow:(NSWindow *)window
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    self = [super initWithWindow:window];
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         NSUserDefaults *userPreferences = [NSUserDefaults standardUserDefaults];
         self.downloadDirectory = [userPreferences stringForKey:@"downloadDirectory"];
@@ -47,14 +47,18 @@
     // Reset pref
     // Reset downloadDirectory (easy)
     // Reset updates pref (dunno)
-    [self close];
 }
 
 - (IBAction)saveChanges:(id)sender {
     // Save everything
     NSUserDefaults *userPreferences = [NSUserDefaults standardUserDefaults];
     [userPreferences setObject:self.downloadDirectory forKey:@"downloadDirectory"];
-    [self close];
+}
+
+#pragma PaneProtocol
+
+- (void)dispose {
+    [self cancelChanges:nil];
 }
 
 

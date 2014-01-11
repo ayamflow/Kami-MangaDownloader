@@ -7,14 +7,16 @@
 //
 
 #import "AppDelegate.h"
-#import "MasterViewController.h"
-#import "PreferencesPaneWindowController.h"
 #import "DownloadManager.h"
+#import "MasterViewController.h"
+#import "DownloadPane.h"
+#import "SearchPane.h"
+#import "PreferencesPane.h"
+#import "PaneProtocol.h"
 
 @interface AppDelegate ()
 
-@property (strong, nonatomic) MasterViewController *masterViewController;
-@property (strong, nonatomic) PreferencesPaneWindowController *preferencesPane;
+@property (strong, nonatomic) NSViewController<PaneProtocol> *currentController;
 
 @end
 
@@ -25,9 +27,45 @@
     [self checkIfApplicationSUpportFolderExists];
     [self checkIfPreferencesAreSet];
 
-    self.masterViewController = [[MasterViewController alloc] initWithNibName:@"MasterViewController" bundle:nil];
-    [self.window.contentView addSubview:self.masterViewController.view];
-    self.masterViewController.view.frame = ((NSView *)self.window.contentView).bounds;
+    [self createSidebar];
+    [self showSearchPane ];
+}
+
+#pragma Sidebar management
+
+- (void)createSidebar {
+    [self.sidebar addItemWithImage:[NSImage imageNamed:@"bookmarkButton.png"] target:self action:@selector(showBookmarkPane)];
+    [self.sidebar addItemWithImage:[NSImage imageNamed:@"searchButton.png"] target:self action:@selector(showSearchPane)];
+    [self.sidebar addItemWithImage:[NSImage imageNamed:@"downloadButton.png"] target:self action:@selector(showDownloadPane)];
+    [self.sidebar addItemWithImage:[NSImage imageNamed:@"settingsButton.png"] target:self action:@selector(showPreferencesPane)];
+}
+
+- (void)showBookmarkPane {
+    [self showPane:@"MasterViewController"];
+}
+
+- (void)showSearchPane {
+    [self showPane:@"SearchPane"];
+}
+
+- (void)showDownloadPane {
+    [self showPane:@"DownloadPane"];
+}
+
+- (void)showPreferencesPane {
+    [self showPane:@"PreferencesPane"];
+}
+
+- (IBAction)showSettingsPaneFromMenu:(id)sender {
+    [self showPreferencesPane];
+}
+
+- (void)showPane:(NSString *)className {
+    [self.currentController.view removeFromSuperview];
+    [self.currentController dispose];
+    self.currentController = [[NSClassFromString(className) alloc] initWithNibName:className bundle:nil];
+    [self.centerView addSubview:self.currentController.view];
+    self.currentController.view.frame = ((NSView *)self.window.contentView).bounds;
 }
 
 #pragma Exit application
@@ -55,12 +93,7 @@
     }
 }
 
-#pragma Preferences pane
-
-- (IBAction)openPreferencesPane:(id)sender {
-    self.preferencesPane = [[PreferencesPaneWindowController alloc] initWithWindowNibName:@"PreferencesPane"];
-    [self.preferencesPane showWindow:nil];
-}
+#pragma Default settings
 
 - (void)checkIfPreferencesAreSet {
     // Check that the downloadDirectory preference exists, or defaults to Documents directory.

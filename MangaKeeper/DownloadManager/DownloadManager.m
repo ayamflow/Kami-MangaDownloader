@@ -33,6 +33,7 @@
     if(self = [super init]) {
         self.downloadQueues = [NSMutableArray array];
         self.activesQueues = [NSMutableArray array];
+        _connectionsNumber = 1;
         _isPaused = NO;
     }
     return self;

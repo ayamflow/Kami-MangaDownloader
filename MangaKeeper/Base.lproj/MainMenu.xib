@@ -28,7 +28,7 @@
                             </menuItem>
                             <menuItem title="Preferences…" keyEquivalent="," id="129">
                                 <connections>
-                                    <action selector="openPreferencesPane:" target="494" id="6HQ-tZ-NZB"/>
+                                    <action selector="showSettingsPaneFromMenu:" target="494" id="o5k-Nr-ZoH"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Check for updates..." id="2df-EU-2xx">
@@ -142,15 +142,46 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowCollectionBehavior key="collectionBehavior" fullScreenPrimary="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="335" y="390" width="805" height="325"/>
+            <rect key="contentRect" x="335" y="390" width="1024" height="480"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1440" height="878"/>
             <view key="contentView" id="372">
-                <rect key="frame" x="0.0" y="0.0" width="805" height="325"/>
+                <rect key="frame" x="0.0" y="0.0" width="1024" height="480"/>
                 <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <scrollView fixedFrame="YES" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i8Z-lL-2cR">
+                        <rect key="frame" x="0.0" y="0.0" width="67" height="480"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <clipView key="contentView" ambiguous="YES" misplaced="YES" id="61B-jA-PVu">
+                            <rect key="frame" x="0.0" y="0.0" width="67" height="480"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <subviews>
+                                <view fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kD2-Gz-qRr" customClass="ITSidebar">
+                                    <rect key="frame" x="0.0" y="0.0" width="67" height="480"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </view>
+                            </subviews>
+                            <color key="backgroundColor" name="controlDarkShadowColor" catalog="System" colorSpace="catalog"/>
+                        </clipView>
+                        <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="md6-5n-rCD">
+                            <rect key="frame" x="0.0" y="464" width="67" height="16"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </scroller>
+                        <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="FdC-N0-1sV">
+                            <rect key="frame" x="51" y="0.0" width="16" height="480"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </scroller>
+                    </scrollView>
+                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zEh-SX-ltw">
+                        <rect key="frame" x="67" y="0.0" width="957" height="480"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    </customView>
+                </subviews>
             </view>
         </window>
         <customObject id="494" customClass="AppDelegate">
             <connections>
+                <outlet property="centerView" destination="zEh-SX-ltw" id="pG7-nh-gVd"/>
+                <outlet property="sidebar" destination="kD2-Gz-qRr" id="wVO-jp-xZM"/>
                 <outlet property="window" destination="371" id="532"/>
             </connections>
         </customObject>

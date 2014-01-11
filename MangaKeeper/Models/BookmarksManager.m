@@ -61,6 +61,7 @@
 }
 
 - (void)addBookmarkWithURL:(NSString *)url {
+    if([url isEqualToString:@""]) return;
     BookmarkModel *bookmark = [[BookmarkModel alloc] initWithURL:url];
     if([self getBookmarkWithURL:url] != nil) return; // Prevent doubles
     [self.bookmarks addObject:bookmark];
