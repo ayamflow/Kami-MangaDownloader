@@ -32,6 +32,9 @@
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
+                    <connections>
+                        <binding destination="-2" name="value" keyPath="autoCheckUpdates" id="cxo-0e-qwm"/>
+                    </connections>
                 </button>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6BA-If-8bR">
                     <rect key="frame" x="154" y="305" width="364" height="17"/>
@@ -94,22 +97,26 @@ Gw
                     </connections>
                 </button>
                 <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mlV-uE-70y">
-                    <rect key="frame" x="353" y="229" width="75" height="26"/>
+                    <rect key="frame" x="353" y="229" width="107" height="26"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="GOP-ir-myS">
+                    <popUpButtonCell key="cell" type="push" title="Hourly" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="3600" imageScaling="proportionallyDown" inset="2" selectedItem="weE-F7-3F1" id="GOP-ir-myS">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="menu"/>
                         <menu key="menu" title="OtherViews" id="kJ9-dL-oY7">
                             <items>
-                                <menuItem title="Hourly" tag="3600" id="weE-F7-3F1"/>
+                                <menuItem title="Hourly" state="on" tag="3600" id="weE-F7-3F1"/>
                                 <menuItem title="Daily" tag="86400" id="FKZ-vE-Isy"/>
                                 <menuItem title="Weekly" tag="604800" id="oTD-a4-O2f"/>
                                 <menuItem title="Monthly" tag="2629800" id="OiP-mr-EDZ"/>
                             </items>
                         </menu>
                     </popUpButtonCell>
+                    <connections>
+                        <binding destination="-2" name="selectedTag" keyPath="autoCheckFrequency" id="bTG-0X-bbA"/>
+                    </connections>
                 </popUpButton>
             </subviews>
         </customView>
+        <userDefaultsController representsSharedInstance="YES" id="CuI-N6-XBZ"/>
     </objects>
 </document>

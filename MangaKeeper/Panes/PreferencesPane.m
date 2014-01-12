@@ -7,6 +7,7 @@
 //
 
 #import "PreferencesPane.h"
+#import <Sparkle/Sparkle.h>
 
 @interface PreferencesPane ()
 
@@ -22,8 +23,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        NSUserDefaults *userPreferences = [NSUserDefaults standardUserDefaults];
-        self.downloadDirectory = [userPreferences stringForKey:@"downloadDirectory"];
+        [self cancelChanges:nil];
     }
     return self;
 }
@@ -44,15 +44,17 @@
 #pragma Save/cancel
 
 - (IBAction)cancelChanges:(id)sender {
-    // Reset pref
-    // Reset downloadDirectory (easy)
-    // Reset updates pref (dunno)
+    NSUserDefaults *userPreferences = [NSUserDefaults standardUserDefaults];
+    self.downloadDirectory = [userPreferences stringForKey:@"downloadDirectory"];
+    self.autoCheckUpdates = [[SUUpdater sharedUpdater] automaticallyChecksForUpdates];
+    self.autoCheckFrequency = [[SUUpdater sharedUpdater] updateCheckInterval];
 }
 
 - (IBAction)saveChanges:(id)sender {
-    // Save everything
     NSUserDefaults *userPreferences = [NSUserDefaults standardUserDefaults];
     [userPreferences setObject:self.downloadDirectory forKey:@"downloadDirectory"];
+    [[SUUpdater sharedUpdater] setAutomaticallyChecksForUpdates:self.autoCheckUpdates];
+    [[SUUpdater sharedUpdater] setUpdateCheckInterval:self.autoCheckFrequency];
 }
 
 #pragma PaneProtocol
