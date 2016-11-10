@@ -1,6 +1,8 @@
 Kami - Manga Downloader for Mac OS X
 ==================================
 
+## Kami development is discontinued. For alternatives, try MangaRipper or DoujinDownloader (windows only).
+
 Kami is a Mac OS X application intended to ease the search & download of manga chapters.
 
 ## Features
